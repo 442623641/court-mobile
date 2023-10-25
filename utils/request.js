@@ -14,7 +14,7 @@ const request = function(url, options) {
 			data: exNull(options.data),
 			// header这里根据业务情况自行选择需要还是不需要
 			header: {
-				//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjREMDQ1RDNGLTZFMTEtMjkxNy0zM0I3LTY2NDY3NDBENzRBRSIsIm5hbWUiOiLlvKDkuIkiLCJwaG9uZSI6IjEzMzMzMzMzMzMzIiwicm9sZSI6IueuoeeQhuWRmCIsInJvbGVDb2RlIjoiOCIsImRlcGFydG1lbnQiOiLnrqHnkIblkZgiLCJvcGVuaWQiOiJveWlwNzVVenhmM3B2THV3WlZkMHlxTUJPNExBIiwiZXhwIjoyMDEzODY1MDAwfQ.YEPKeUh0mWRXLS1i5zpGA8Q1plAU2murkbTCmkrv-NM
+				//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjREMDQ1RDNGLTZFMTEtMjkxNy0zM0I3LTY2NDY3NDBENzRBRSIsIm5hbWUiOiLlvKDkuIkiLCJwaG9uZSI6IjEzMzMzMzMzMzMzIiwicm9sZSI6IueuoeeQhuWRmCIsInJvbGVDb2RlIjoiOCIsImRlcGFydG1lbnQiOiLnrqHnkIblkZgiLCJvcGVuaWQiOiJveWlwNzVVenhmM3B2THV3WlZkMHlxTUJPNExBIiwiZXhwIjoyMDEzODY1Nzg4fQ.2YQREAoh9o1tt4i8KMeaa30FuRbVGNpaplayzD0uUFk
 				'Authorization': 'Bearer ' + app.globalData.token
 			},
 			success(res) {
