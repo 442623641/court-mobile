@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/chart/chart",
+    "pages/my/my",
+    "pages/password/password",
+    "pages/case/case"
+  ],
+  "usingComponents": {
+    "van-cell-group": "/wxcomponents/vant/cell-group/index",
+    "van-button": "/wxcomponents/vant/button/index"
+  },
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#646566",
+    "selectedColor": "#1989fa",
+    "list": [
+      {
+        "current": 0,
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/static/home.png",
+        "selectedIconPath": "/static/home-active.png"
+      },
+      {
+        "current": 1,
+        "pagePath": "pages/chart/chart",
+        "text": "图表",
+        "iconPath": "/static/chart.png",
+        "selectedIconPath": "/static/chart-active.png"
+      },
+      {
+        "current": 2,
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "/static/my.png",
+        "selectedIconPath": "/static/my-active.png"
+      }
+    ]
+  }
+}

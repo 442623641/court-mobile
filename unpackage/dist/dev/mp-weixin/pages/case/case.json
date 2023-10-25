@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "案件详情",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "van-cell": "../../wxcomponents/vant/cell/index",
+    "van-field": "../../wxcomponents/vant/field/index",
+    "van-icon": "../../wxcomponents/vant/icon/index",
+    "van-steps": "../../wxcomponents/vant/steps/index",
+    "van-switch": "../../wxcomponents/vant/switch/index"
+  }
+}

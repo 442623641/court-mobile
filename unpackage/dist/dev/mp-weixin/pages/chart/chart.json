@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "图表",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "van-cell": "../../wxcomponents/vant/cell/index"
+  }
+}

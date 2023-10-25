@@ -1,0 +1,13 @@
+
+.logo {
+		margin: 32px 0;
+		font-size: 26px;
+		padding: 16px;
+		font-weight: bold;
+		color: #333;
+}
+.login-button {
+		text-align: center;
+		padding: 10px 16px;
+		margin-top: 40px;
+}

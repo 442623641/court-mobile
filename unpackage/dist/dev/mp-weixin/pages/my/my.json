@@ -1,0 +1,7 @@
+{
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "van-cell": "../../wxcomponents/vant/cell/index"
+  }
+}

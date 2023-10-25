@@ -1,0 +1,119 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": true,
+				"usingComponents": {
+					"van-field": "/wxcomponents/vant/field/index"
+				}
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom",
+				"usingComponents": {
+					"van-empty": "/wxcomponents/vant/empty/index",
+					// "van-tabbar": "/wxcomponents/vant/tabbar/index",
+					// "van-tabbar-item": "/wxcomponents/vant/tabbar-item/index",
+					// "van-search": "/wxcomponents/vant/search/index",
+					"van-popup": "/wxcomponents/vant/popup/index",
+					"van-icon": "/wxcomponents/vant/icon/index",
+					// "van-dropdown-menu": "/wxcomponents/vant/dropdown-menu/index",
+					// "van-dropdown-item": "/wxcomponents/vant/dropdown-item/index",
+					"van-row": "/wxcomponents/vant/row/index",
+					"van-col": "/wxcomponents/vant/col/index",
+					"van-tag": "/wxcomponents/vant/tag/index",
+					"van-steps": "/wxcomponents/vant/steps/index"
+					
+				}
+			}
+		}, {
+			"path": "pages/chart/chart",
+			"style": {
+				"navigationBarTitleText": "图表",
+				"enablePullDownRefresh": false,
+				"usingComponents": {
+					"van-cell": "/wxcomponents/vant/cell/index"
+				}
+			}
+
+		}, {
+			"path": "pages/my/my",
+			"style": {
+				// "navigationBarTitleText": "个人中心",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"usingComponents": {
+					"van-cell": "/wxcomponents/vant/cell/index"
+				}
+			}
+		}, {
+			"path": "pages/password/password",
+			"style": {
+				"navigationBarTitleText": "修改密码",
+				"enablePullDownRefresh": false,
+				"usingComponents": {
+					"van-field": "/wxcomponents/vant/field/index"
+				}
+			}
+
+		}
+	    ,{
+            "path" : "pages/case/case",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "案件详情",
+                "enablePullDownRefresh": false,
+				"usingComponents": {
+					"van-cell": "/wxcomponents/vant/cell/index",
+					"van-field": "/wxcomponents/vant/field/index",
+					"van-icon": "/wxcomponents/vant/icon/index",
+					"van-steps": "/wxcomponents/vant/steps/index",
+					"van-switch": "/wxcomponents/vant/switch/index"
+				}
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"usingComponents": {
+			"van-cell-group": "/wxcomponents/vant/cell-group/index",
+			"van-button": "/wxcomponents/vant/button/index"
+		}
+	},
+	"tabBar": {
+		"color": "#646566",
+		"selectedColor": "#1989fa",
+		"list": [{
+				"current": 0,
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "/static/home.png",
+				"selectedIconPath": "/static/home-active.png"
+			},
+			{
+				"current": 1,
+				"pagePath": "pages/chart/chart",
+				"text": "图表",
+				"iconPath": "/static/chart.png",
+				"selectedIconPath": "/static/chart-active.png"
+			},
+			{
+				"current": 2,
+				"pagePath": "pages/my/my",
+				"text": "我的",
+				"iconPath": "/static/my.png",
+				"selectedIconPath": "/static/my-active.png"
+			}
+		]
+	},
+	"uniIdRouter": {}
+}
