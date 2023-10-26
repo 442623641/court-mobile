@@ -1,6 +1,6 @@
 "use strict";
 const common_vendor = require("./common/vendor.js");
-const untils_request = require("./untils/request.js");
+const utils_request = require("./utils/request.js");
 const api = {
   // 登录
   login(data = {}) {
@@ -9,7 +9,7 @@ const api = {
         code
       }) {
         console.log("code", code);
-        untils_request.request.post("WXInfo/WXLogin", {
+        utils_request.request.post("WXInfo/WXLogin", {
           ...data,
           code
         }).then((res) => {
@@ -30,14 +30,14 @@ const api = {
     }));
   },
   cases(data) {
-    return untils_request.request.get("court/pages", {
+    return utils_request.request.get("court/pages", {
       pageIndex: 1,
       pageSize: 20,
       ...data
     });
   },
   password(oldPassword, password) {
-    return untils_request.request.post("court/User/ChangePassword", {
+    return utils_request.request.post("court/User/ChangePassword", {
       oldPassword,
       password
     });

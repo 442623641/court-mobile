@@ -2,6 +2,7 @@
   "navigationBarTitleText": "图表",
   "enablePullDownRefresh": false,
   "usingComponents": {
-    "van-cell": "../../wxcomponents/vant/cell/index"
+    "van-cell": "../../wxcomponents/vant/cell/index",
+    "qiun-wx-ucharts": "../../wxcomponents/qiun-wx-ucharts/index"
   }
 }

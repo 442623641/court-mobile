@@ -23,36 +23,36 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-page {
+page.data-v-1cf27b2a {
   --label-width:34px;
 }
-.title {
+.title.data-v-1cf27b2a {
   font-size: 16px;
 }
-.title text {
+.title text.data-v-1cf27b2a {
   margin-left: 10px;
 }
-.flex-between {
+.flex-between.data-v-1cf27b2a {
   --tag-padding: 2px 10px;
   --tag-round-border-radius: 8px;
 }
-.nav-bar {
+.nav-bar.data-v-1cf27b2a {
   background: #fff;
 }
-.rows {
+.rows.data-v-1cf27b2a {
   justify-content: space-between;
 }
-.margin-item {
+.margin-item.data-v-1cf27b2a {
   margin: 12px 0;
   white-space: nowrap;
 }
-.label {
+.label.data-v-1cf27b2a {
   font-size: 14px;
   width: var(--label-width);
   flex: 1;
   display: inline-block;
 }
-.item-button {
+.item-button.data-v-1cf27b2a {
   margin-left: 10px;
   background: #f8f8f8;
   font-size: 13px;
@@ -61,32 +61,32 @@ page {
   padding: 5px 12px;
   color: #333;
 }
-.item-button.active {
+.item-button.active.data-v-1cf27b2a {
   background: #e6f7ff;
   color: #1989fa;
 }
-.van-button {
+.van-button.data-v-1cf27b2a {
   border-color: transparent;
   background: #f1f1f1;
 }
-.scroller {
+.scroller.data-v-1cf27b2a {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.scroller .scroll-x {
+.scroller .scroll-x.data-v-1cf27b2a {
   --scroll-width:calc(100% - var(--label-width));
   flex: 1 0 var(--scroll-width);
   max-width: var(--scroll-width);
   width: var(--scroll-width);
 }
-.end-line {
+.end-line.data-v-1cf27b2a {
   font-size: 13px;
   color: #777;
   padding: 5px;
   margin-bottom: 5px;
   text-align: center;
 }
-.end-line::before {
+.end-line.data-v-1cf27b2a::before {
   content: "我是有底线的～";
 }

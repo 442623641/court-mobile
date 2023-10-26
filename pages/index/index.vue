@@ -4,27 +4,12 @@
 		<van-icon name="filter-o" @click='openModal' />
 	</view>
 	<view class="content" :style="{marginTop:navbar.height}">
-		<!-- <template v-if='items?.length'> -->
-		<!-- 	activeCourtTime: "2021-11-02"
-			clerkId: "4D045D3F-6E11-2917-33B7-6646740D74AE"
-			clerker: "张三"
-			createCourtTime: ""
-			createTime: "2023-10-23 21:44:24"
-			creator: ""
-			department: "院领导"
-			endCourtTime: "2021-08-17"
-			id: "f77c93e1-9c57-4c21-af48-cf85255c2e64"
-			litigant: "原告:陆强;被告:安徽品阳建筑装饰工程有限公司,胡阁"
-			modificationTime: "1970-01-01 00:00:00"
-			no: "(2021)皖0403民初537号"
-			processer: "张三" -->
 		<view class="list" v-if='items&&items.length' :class="{loading:items[0].loading}">
 			<view class="card" v-for='item of items' :key="item.id" @click="goDetail(item)">
-				<view class="title margin-bottom-12"><van-tag type="danger" class="skeleton-item">New</van-tag>
+				<view class="title margin-bottom-12"><van-tag v-if='item.isEdit' type="danger" class="skeleton-item">New</van-tag>
 					<text class="skeleton-item">{{item.no}}</text>
 				</view>
-				<!-- <view class="van-multi-ellipsis--l2 note margin-top-8">{{item.litigant}}</view> -->
-				<van-steps v-if='item.steps' :steps="item.steps" :active="item.state" class="margin-v-12" />
+				<van-steps  v-if='item.steps' :steps="item.steps" :active="item.state" class="margin-v-12" />
 				<view v-else class="skeleton-item" style="padding: 36px;"></view>
 				<view class="flex-between margin-top-12">
 					<van-tag round plain type="primary" class="skeleton-item">{{item.processer}}</van-tag>
@@ -50,7 +35,7 @@
 					@click='tempQuery.sort=item.value' class="item-button">{{item.text}}</view>
 					</scroll-view>
 			</view>
-			<view style="padding-top: 10px;" />
+			<view style="padding-top: 10px;" :boder='false' />
 			<van-row gutter="20">
 				<van-col span="12">
 					<van-button size='small' block type="info" @click='save'>确定</van-button>
@@ -63,10 +48,10 @@
 </template>
 
 <script>
-	import api from '/api.js';
+	import api from '../../api.js';
 	import {
 		STEPS,REFUNDS
-	} from '/constant.js';
+	} from '../../constant.js';
 	export default {
 		data() {
 			return {
@@ -151,7 +136,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	page{
 		--label-width:34px;
 	}

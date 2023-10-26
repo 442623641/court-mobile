@@ -1,5 +1,7 @@
 "use strict";
+const utils_request = require("../../utils/request.js");
 const common_vendor = require("../../common/vendor.js");
+require("../../utils/tools.js");
 const _sfc_main = {
   data() {
     return {
@@ -10,7 +12,11 @@ const _sfc_main = {
   onLoad() {
     console.log(this.navbar);
   },
-  methods: {}
+  methods: {
+    logout2() {
+      utils_request.logout();
+    }
+  }
 };
 if (!Array) {
   const _component_van_cell = common_vendor.resolveComponent("van-cell");
@@ -34,7 +40,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       value: $data.userInfo.role
     }),
     e: common_vendor.p({
-      inset: true
+      inset: true,
+      border: false
     }),
     f: common_vendor.p({
       title: "密码",
@@ -43,17 +50,19 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       linkType: "navigateTo",
       url: "/pages/password/password"
     }),
-    g: common_vendor.p({
+    g: common_vendor.o($options.logout2),
+    h: common_vendor.p({
       border: false,
       title: "切换账号",
       isLink: true,
       linkType: "redirectTo",
       url: "/pages/login/login"
     }),
-    h: common_vendor.p({
-      inset: true
+    i: common_vendor.p({
+      inset: true,
+      border: false
     }),
-    i: $data.navbar.height
+    j: $data.navbar.height
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "/Users/zhangleo/workspace/court/pages/my/my.vue"]]);

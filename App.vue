@@ -66,6 +66,11 @@
 		align-items: center;
 		box-sizing: border-box;
 	}
+	.login-button {
+		text-align: center;
+		padding: 10px 16px;
+		margin-top: 20px;
+	}
 .block{
 	display: block;
 }

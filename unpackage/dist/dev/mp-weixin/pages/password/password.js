@@ -1,8 +1,8 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const untils_tools = require("../../untils/tools.js");
+const utils_tools = require("../../utils/tools.js");
 const api = require("../../api.js");
-require("../../untils/request.js");
+require("../../utils/request.js");
 const _sfc_main = {
   data() {
     return {
@@ -17,11 +17,11 @@ const _sfc_main = {
     submit() {
       this.loading = true;
       api.api.password(this.oldPassword, this.password).then((res) => {
-        untils_tools.Tools.toast("保存成功");
+        utils_tools.Tools.toast("保存成功");
         common_vendor.wx$1.redirectTo("/pages/login/login");
       }).catch(({
         message
-      }) => untils_tools.Tools.toast(message.trim() || "网络延时，请稍后再试"));
+      }) => utils_tools.Tools.toast(message.trim() || "网络延时，请稍后再试"));
       console.log("submit");
     },
     back() {
@@ -41,7 +41,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     c: common_vendor.p({
       titleWidth: "4.2em",
       icon: $data.isEye ? "closed-eye" : "eye-o",
-      password: $data.isEye,
+      type: $data.isEye ? "text" : "password",
       label: "旧密码",
       placeholder: "请输入旧密码",
       value: $data.password
@@ -49,9 +49,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     d: common_vendor.o(($event) => $data.newPassword = $event),
     e: common_vendor.p({
       titleWidth: "4.2em",
-      password: $data.isEye,
+      type: $data.isEye ? "text" : "password",
       label: "新密码",
-      password: true,
       placeholder: "请输入新密码",
       value: $data.newPassword
     }),
@@ -59,9 +58,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     g: common_vendor.o(($event) => $data.confirmPassword = $event),
     h: common_vendor.p({
       titleWidth: "4.2em",
-      password: $data.isEye,
+      type: $data.isEye ? "text" : "password",
       label: "确认密码",
-      password: true,
       placeholder: "请输入确认密码",
       border: false,
       value: $data.confirmPassword

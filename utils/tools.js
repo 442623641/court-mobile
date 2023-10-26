@@ -3,9 +3,5 @@ export const Tools = {
 		title,
 		icon: 'none',
 		duration: 2000
-	})
-	logout:()=>{
-		wx.clearStorageSync()
-		wx.redirectTo('/pages/login/login')
-	}
+	})	
 }

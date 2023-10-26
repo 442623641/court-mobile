@@ -8,14 +8,14 @@
 	    自定义顶部栏用的fixed定位，会遮盖到下面内容，注意设置好间距
 	-->
 	<view class="content" :style="{marginTop:navbar.height}">
-		<van-cell-group inset class='margin-bt-10'>
+		<van-cell-group inset class='margin-bt-10' :border='false'>
 			<van-cell title="手机号码" :value="userInfo.phone" />
 			<van-cell title="部门职级" :value='userInfo.department' />
 			<van-cell :border='false' title="我的角色" :value='userInfo.role' />
 		</van-cell-group>
-		<van-cell-group inset class='margin-top-10'>
+		<van-cell-group inset class='margin-top-10' :border='false'>
 			<van-cell title="密码" value="修改密码" is-link link-type="navigateTo" url="/pages/password/password" />
-			<van-cell :border='false' title="切换账号" @click='logout2'/>
+			<van-cell :border='false' title="切换账号" @click='logout2' is-link link-type="redirectTo" url="/pages/login/login"/>
 		</van-cell-group>
 	</view>
 </template>

@@ -1,6 +1,6 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
-const untils_tools = require("./tools.js");
+const utils_tools = require("./tools.js");
 const request = function(url, options) {
   const app = getApp();
   return new Promise((resolve, reject) => {
@@ -10,7 +10,6 @@ const request = function(url, options) {
       data: exNull(options.data),
       // header这里根据业务情况自行选择需要还是不需要
       header: {
-        //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjREMDQ1RDNGLTZFMTEtMjkxNy0zM0I3LTY2NDY3NDBENzRBRSIsIm5hbWUiOiLlvKDkuIkiLCJwaG9uZSI6IjEzMzMzMzMzMzMzIiwicm9sZSI6IueuoeeQhuWRmCIsInJvbGVDb2RlIjoiOCIsImRlcGFydG1lbnQiOiLnrqHnkIblkZgiLCJvcGVuaWQiOiJveWlwNzVVenhmM3B2THV3WlZkMHlxTUJPNExBIiwiZXhwIjoyMDEzODY0NDg5fQ.bqJy7xxd_5hQVZgPk-TSnpYvOeBb4_Z3O4-NhJ7_0rA
         "Authorization": "Bearer " + app.globalData.token
       },
       success(res) {
@@ -19,11 +18,11 @@ const request = function(url, options) {
           case 200:
             return resolve(res.data);
           case 405:
-            untils_tools.Tools.toast((_a = res.data) == null ? void 0 : _a.message);
+            utils_tools.Tools.toast((_a = res.data) == null ? void 0 : _a.message);
             res.data.message = " ";
             break;
           case 401:
-            common_vendor.wx$1.reLaunch({ url: "pages/login/login" });
+            logout();
             break;
         }
         reject(res);
@@ -49,6 +48,10 @@ const exNull = (obj) => {
   });
   return nobj;
 };
+const logout = () => {
+  common_vendor.wx$1.clearStorageSync();
+  common_vendor.wx$1.redirectTo("/pages/login/login");
+};
 const request$1 = {
   //封装get方法
   get(url, data) {
@@ -65,4 +68,5 @@ const request$1 = {
     });
   }
 };
+exports.logout = logout;
 exports.request = request$1;

@@ -1,12 +1,12 @@
 <template>
 	<view>
 		<form bindsubmit="submit">
-			<van-field title-width='4.2em' :icon="isEye?'closed-eye':'eye-o'" :password='isEye' label='旧密码'
+			<van-field title-width='4.2em' :icon="isEye?'closed-eye':'eye-o'" :type="isEye?'text':'password'" label='旧密码'
 				v-model:value="password" placeholder="请输入旧密码" @click-icon='isEye=!isEye' />
-			<van-field title-width='4.2em' :password='isEye' label='新密码' v-model:value="newPassword" password
+			<van-field title-width='4.2em' :type="isEye?'text':'password'" label='新密码' v-model:value="newPassword"
 				placeholder="请输入新密码" />
-			<van-field title-width='4.2em' :password='isEye' label='确认密码' v-model:value="confirmPassword"
-				@change="confirmPassword = $event.detail" password placeholder="请输入确认密码" :border="false" />
+			<van-field title-width='4.2em' :type="isEye?'text':'password'" label='确认密码' v-model:value="confirmPassword"
+				@change="confirmPassword = $event.detail" placeholder="请输入确认密码" :border="false" />
 			<div class="login-button">
 				<view >
 					<van-button form-type="submit"
