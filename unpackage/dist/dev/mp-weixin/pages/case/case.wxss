@@ -23,6 +23,66 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.state-0 {
+  --background: rgba(0,0,0,.12);
+}
+.state-0:before {
+  content: "未结案";
+  vertical-align: 1px;
+}
+.state-1 {
+  --background: #7232dd;
+}
+.state-1:before {
+  content: "已结案";
+  vertical-align: 1px;
+}
+.state-2 {
+  --background: #1989fa;
+}
+.state-2:before {
+  content: "待处理";
+  vertical-align: 1px;
+}
+.state-3 {
+  --background: #ff976a;
+}
+.state-3:before {
+  content: "待退费";
+  vertical-align: 1px;
+}
+.state-4 {
+  --background: #2dd36f;
+}
+.state-4:before {
+  content: "已退费";
+  vertical-align: 1px;
+}
+.state-5 {
+  --background: #eb445a;
+}
+.state-5:before {
+  content: "已超期";
+  vertical-align: 1px;
+}
+.state-6 {
+  --background: #2dd36f;
+}
+.state-6:before {
+  content: "无需退费";
+  vertical-align: 1px;
+}
+.state-current {
+  color: var(--background);
+}
+.van-cell__value {
+  --cell-value-color: #666;
+}
+van-switch {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
 .van-field__icon-container .van-icon:before {
   content: "元";
   font-size: 14px;

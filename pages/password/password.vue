@@ -1,17 +1,18 @@
 <template>
 	<view>
-		<form bindsubmit="submit">
-			<van-field title-width='4.2em' :icon="isEye?'closed-eye':'eye-o'" :type="isEye?'text':'password'" label='旧密码'
-				v-model:value="password" placeholder="请输入旧密码" @click-icon='isEye=!isEye' />
-			<van-field title-width='4.2em' :type="isEye?'text':'password'" label='新密码' v-model:value="newPassword"
-				placeholder="请输入新密码" />
-			<van-field title-width='4.2em' :type="isEye?'text':'password'" label='确认密码' v-model:value="confirmPassword"
+		<form @submit="submit">
+			<van-field :value='password' @change='password=$event.detail' title-width='4.2em'
+				:icon="isEye?'eye-o':'closed-eye'" :type="isEye?'text':'password'" label='原密码' placeholder="请输入原密码"
+				@click-icon='isEye=!isEye' />
+			<van-field :value='newPassword' @change='newPassword=$event.detail' title-width='4.2em'
+				:type="isEye?'text':'password'" label='新密码' placeholder="请输入新密码" />
+			<van-field title-width='4.2em' :type="isEye?'text':'password'" label='确认密码' :value="confirmPassword"
 				@change="confirmPassword = $event.detail" placeholder="请输入确认密码" :border="false" />
 			<div class="login-button">
-				<view >
+				<view>
 					<van-button form-type="submit"
 						:disabled="password.length<6||newPassword.length<6||newPassword!=confirmPassword"
-						:loading='loading' block type="info" @click='submit' loading-type="circular">保 存</van-button>
+						:loading='loading' block type="info" loading-type="circular">保 存</van-button>
 				</view>
 				<view class="margin-v-10">
 					<van-button plain hairline block type="info" @click='back'>取 消</van-button>
@@ -25,7 +26,10 @@
 	import {
 		Tools
 	} from '../../utils/tools';
-	import api from '/api.js';
+	import api from '../../api';
+	import {
+		logout
+	} from '../../utils/request';
 	export default {
 		data() {
 			return {
@@ -39,12 +43,12 @@
 		methods: {
 			submit() {
 				this.loading = true;
-				api.password(this.oldPassword, this.password).then(res => {
-					Tools.toast('保存成功')
-					wx.redirectTo('/pages/login/login')
+				api.password(this.password, this.newPassword).then(res => {
+					setTimeout(() => logout(), 2000);
+					Tools.toast('保存成功', true);
 				}).catch(({
-					message
-				}) => Tools.toast(message.trim() || '网络延时，请稍后再试'))
+					toasted
+				}) => toasted || Tools.toast(message?.trim()))
 				console.log('submit')
 			},
 			back() {

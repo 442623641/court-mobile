@@ -9,17 +9,27 @@
   ],
   "usingComponents": {
     "van-cell-group": "/wxcomponents/vant/cell-group/index",
-    "van-button": "/wxcomponents/vant/button/index"
+    "van-button": "/wxcomponents/vant/button/index",
+    "van-steps": "/wxcomponents/vant/steps/index",
+    "van-icon": "/wxcomponents/vant/icon/index",
+    "van-tag": "/wxcomponents/vant/tag/index",
+    "van-row": "/wxcomponents/vant/row/index",
+    "van-col": "/wxcomponents/vant/col/index",
+    "van-nav-bar": "/wxcomponents/vant/nav-bar/index",
+    "van-popup": "/wxcomponents/vant/popup/index",
+    "van-empty": "/wxcomponents/vant/empty/index"
   },
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "田家庵法院",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
   "tabBar": {
     "color": "#646566",
     "selectedColor": "#1989fa",
+    "backgroundColor": "white",
+    "borderStyle": "white",
     "list": [
       {
         "current": 0,
@@ -31,7 +41,7 @@
       {
         "current": 1,
         "pagePath": "pages/chart/chart",
-        "text": "图表",
+        "text": "看板",
         "iconPath": "/static/chart.png",
         "selectedIconPath": "/static/chart-active.png"
       },

@@ -1,0 +1,19 @@
+	$states: (
+		('未结案', 'rgba(0,0,0,.12)'),
+		('已结案', '#7232dd'),
+		('待处理', '#1989fa'),
+		('待退费', '#ff976a'),
+		('已退费', '#2dd36f'),
+		('已超期', '#eb445a'),
+		('无需退费', '#2dd36f')
+	);
+	@for $i from 0 to length($states) {
+		.state-#{$i} {
+			--background: #{nth(nth($states, $i + 1), 2)};
+
+			&:before {
+				content: nth(nth($states, $i + 1), 1);
+				vertical-align: 1px;
+			}
+		}
+	}

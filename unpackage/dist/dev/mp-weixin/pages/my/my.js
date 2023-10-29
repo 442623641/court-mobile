@@ -5,12 +5,8 @@ require("../../utils/tools.js");
 const _sfc_main = {
   data() {
     return {
-      userInfo: getApp().globalData.userInfo,
-      navbar: getApp().globalData.navbar
+      userInfo: getApp().globalData.userInfo
     };
-  },
-  onLoad() {
-    console.log(this.navbar);
   },
   methods: {
     logout2() {
@@ -25,26 +21,34 @@ if (!Array) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: common_vendor.s($data.navbar),
-    b: common_vendor.p({
-      title: "手机号码",
-      value: $data.userInfo.phone
+    a: common_vendor.p({
+      icon: "idcard",
+      title: "姓名",
+      value: $data.userInfo.name
     }),
-    c: common_vendor.p({
-      title: "部门职级",
+    b: common_vendor.p({
+      icon: "cluster-o",
+      title: "部门",
       value: $data.userInfo.department
     }),
-    d: common_vendor.p({
+    c: common_vendor.p({
+      icon: "bookmark-o",
       border: false,
-      title: "我的角色",
+      title: "角色",
       value: $data.userInfo.role
     }),
-    e: common_vendor.p({
+    d: common_vendor.p({
       inset: true,
       border: false
     }),
+    e: common_vendor.p({
+      icon: "phone-o",
+      title: "手机",
+      value: $data.userInfo.phone
+    }),
     f: common_vendor.p({
       title: "密码",
+      icon: "pending-payment",
       value: "修改密码",
       isLink: true,
       linkType: "navigateTo",
@@ -52,17 +56,16 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     g: common_vendor.o($options.logout2),
     h: common_vendor.p({
+      icon: "exchange",
       border: false,
-      title: "切换账号",
-      isLink: true,
-      linkType: "redirectTo",
-      url: "/pages/login/login"
+      value: "切换账号",
+      title: "注销",
+      isLink: true
     }),
     i: common_vendor.p({
       inset: true,
       border: false
-    }),
-    j: $data.navbar.height
+    })
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "/Users/zhangleo/workspace/court/pages/my/my.vue"]]);

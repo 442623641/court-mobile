@@ -2,6 +2,7 @@
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const common_vendor = require("./common/vendor.js");
 const api = require("./api.js");
+const utils_common = require("./utils/common.js");
 require("./utils/request.js");
 require("./utils/tools.js");
 if (!Math) {
@@ -31,21 +32,21 @@ const _sfc_main = {
       paddingBottom: `${menuButtonInfo.top - systemInfo.statusBarHeight}px`,
       paddingLeft: "16px"
     };
-    const userInfo = common_vendor.wx$1.getStorageSync("userInfo");
-    if (userInfo && userInfo.openid) {
+    const token = common_vendor.wx$1.getStorageSync("token");
+    let userInfo = null;
+    if (token) {
+      userInfo = utils_common.deJWT(token);
+    }
+    if (userInfo == null ? void 0 : userInfo.openid) {
+      that.globalData.token = token;
       that.globalData.userInfo = userInfo;
       common_vendor.wx$1.switchTab({
         url: "pages/index/index"
       });
+      console.log(userInfo);
     } else {
       api.api.login();
     }
-  },
-  onShow: function() {
-    console.log("App Show");
-  },
-  onHide: function() {
-    console.log("App Hide");
   }
 };
 const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/Users/zhangleo/workspace/court/App.vue"]]);

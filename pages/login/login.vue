@@ -1,30 +1,27 @@
 <template>
 	<view>
-		<div class="logo">
-			<!-- <img src='assets/imgs/logo-blue.png' style="width: 180px;"> -->
-			访客预约
-			<!-- 淮南市田家区法院 -->
-		</div>
+		<view class="logo">
+			<image src='/static/logo.jpg' />
+			<view>淮南市田家庵区人民法院</view>
+		</view>
 		<form @submit="login">
-			<!-- <van-cell-group> -->
-			<van-field confirm-type='确认' title-width='3em' type='number' label='账号' :value="user.phone" @change="user.phone = $event.detail"
-				placeholder="请输入手机号" />
-			<van-field confirm-type='确认' title-width='3em' label='密码' :value="user.password" @change="user.password = $event.detail"
-				password placeholder="请输入密码" :border="false" />
-			<!-- </van-cell-group> -->
+			<van-field :value="user.phone" @change='user.phone=$event.detail' confirm-type='确认' title-width='3em'
+				type='number' label='账号' placeholder="请输入手机号" clearable maxlength='11' />
+			<van-field :value="user.password" @change='user.password=$event.detail' confirm-type='确认' title-width='3em'
+				label='密码' password placeholder="请输入密码" :border="false" />
 			<div class="login-button" style="margin-top:40px">
-				<van-button :disabled="user.phone.length!=11||user.password.length<4" :loading='loading' block type="info"
-					@click='login' form-type='submit' loading-type="circular">登 录</van-button>
+				<van-button :disabled="user.phone<=10000000000||user.password?.length<4" :loading='loading' block
+					type="info" form-type='submit' loading-type="circular">登 录</van-button>
 			</div>
 		</form>
 	</view>
 </template>
 
-<script>
+<script lang="ts">
 	import {
 		Tools
 	} from '../../utils/tools'
-	import api from '/api.js'
+	import api from '../../api'
 	export default {
 		data() {
 			return {
@@ -41,28 +38,37 @@
 		},
 		methods: {
 			login() {
-				if (this.user.phone == '13333333333' && this.user.password == '123456') {
-					this.loading = true;
-					api.login(this.user).then(res => {
-							wx.switchTab({
-								url: '/pages/index/index'
-							})
-						}).catch(ex => ex)
-						.finally(() => this.loading = false)
-				} else {
-					Tools.toast('账号或密码错误')
-				}
+				this.loading = true;
+				api.login(this.user).then(() => {
+					wx.switchTab({
+						url: '/pages/index/index'
+					})
+				}).catch(({ toasted }) => { toasted || Tools.toast(-1) })
+					.finally(() => this.loading = false)
+				// } else {
+				// 	Tools.toast('账号或密码错误')
+				// }
 			}
 		}
 	}
 </script>
 
-<style scoped>
+<style lang="scss">
+	page {
+		background: white;
+	}
+
 	.logo {
 		margin: 32px 0;
 		font-size: 26px;
 		padding: 16px;
 		font-weight: bold;
 		color: #333;
+		text-align: center;
+
+		image {
+			width: 90px;
+			height: 90*1.1875px;
+		}
 	}
 </style>

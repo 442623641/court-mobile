@@ -1,92 +1,53 @@
 <template>
-	<!-- 自定义顶部栏 -->
-	<view class="nav-bar" :style="navbar">
-		<van-icon name="filter-o" @click='openModal' />
+	<lo-header title="首页" :filters='options' :query='query' @filter-save='save' />
+	<view :style="`padding-top:${navbar.height}`" class="list" v-if='items?.length' :class="{loading:items[0].loading}">
+		<case-card :item='item' v-for='item of items' :key="item.id" />
 	</view>
-	<view class="content" :style="{marginTop:navbar.height}">
-		<view class="list" v-if='items&&items.length' :class="{loading:items[0].loading}">
-			<view class="card" v-for='item of items' :key="item.id" @click="goDetail(item)">
-				<view class="title margin-bottom-12"><van-tag v-if='item.isEdit' type="danger" class="skeleton-item">New</van-tag>
-					<text class="skeleton-item">{{item.no}}</text>
-				</view>
-				<van-steps  v-if='item.steps' :steps="item.steps" :active="item.state" class="margin-v-12" />
-				<view v-else class="skeleton-item" style="padding: 36px;"></view>
-				<view class="flex-between margin-top-12">
-					<van-tag round plain type="primary" class="skeleton-item">{{item.processer}}</van-tag>
-					<van-tag round plain type="warning" class="skeleton-item">{{item.clerker}}</van-tag>
-				</view>
-			</view>
-			<view class="end-line" v-if='items.length>5'></view>
-		</view>
-		<van-empty v-if='items&&!items.length' description="暂无数据" />
-	</view>
-	<!-- </template> -->
-	<van-popup :custom-style="`padding-top:${navbar.height}`" position='top' :show="show">
-		<view style="padding: 0 16px 16px;">
-			<view class="margin-item">
-				<view class="label">状态:</view>
-				<view v-for='item of states' :key="item.value" :class="{active:tempQuery.status==item.value}"
-					@click='tempQuery.status=item.value' class="item-button">{{item.text}}</view>
-			</view>
-			<view class="margin-item scroller">
-				<view class="label">排序:</view>
-				<scroll-view scroll-x class="scroll-x">
-				<view v-for='item of refunds' :key="item.value" :class="{active:tempQuery.sort==item.value}"
-					@click='tempQuery.sort=item.value' class="item-button">{{item.text}}</view>
-					</scroll-view>
-			</view>
-			<view style="padding-top: 10px;" :boder='false' />
-			<van-row gutter="20">
-				<van-col span="12">
-					<van-button size='small' block type="info" @click='save'>确定</van-button>
-					</van-col>
-				<van-col span="12"><van-button size='small' plain hairline block type="warning"
-						@click='show=false'>取消</van-button></van-col>
-			</van-row>
-		</view>
-	</van-popup>
+	<view class="end-line" v-if='items?.length>2&&items?.length==recordCount' />
+	<view v-if="items?.length<recordCount" class="margin-v-10 block" style="text-align: center;"><van-loading
+			type="spinner" /></view>
+	<van-empty class="margin-top" v-if='!items?.length' description="暂无数据" />
 </template>
 
-<script>
-	import api from '../../api.js';
+<script lang="ts">
+	import api from '../../api';
 	import {
-		STEPS,REFUNDS
-	} from '../../constant.js';
+		STEPS,
+		enum2Object,
+		STATES,
+	} from '../../constant';
 	export default {
 		data() {
 			return {
-				stepStates: STEPS,
+				loading: false,
 				pageIndex: 1,
+				recordCount: 0,
 				navbar: getApp().globalData.navbar,
-				show: false,
-				query: {
-					status: '',
-					sort: ''
+				userInfo: getApp().globalData.userInfo,
+				query: {},
+				options: [{
+					text: '状态',
+					children: STEPS.reduce((prev, curr) => { prev[curr.value] = curr.text; return prev }, {}),
+					value: 'state',
 				},
-				tempQuery: {},
-				states:STEPS,
-				refunds:REFUNDS,
-				sorts: [{
-						text: '默认',
-						value: ''
-					},
-					{
-						text: '生效日升序',
-						value: 1
-					},
-					{
-						text: '生效日降序',
-						value: 2
-					}
-				],
-				items: Array.from({
+				{
+					text: '退费',
+					children: enum2Object(STATES),
+					value: 'isRefund'
+				}],
+				tempQuery: <any>{},
+				departments: null,
+				items: <any>Array.from({
 					length: 3
 				}, (index) => ({
 					id: index,
 					loading: true,
-					clerker: "张三",
-					no: "(2021)皖0403民初537号",
+					clerker: "一二三",
+					no: "(2021)皖0403民32号",
 					processer: "张三",
+					steps: [],
+					step: 0,
+					state: 1
 				}))
 			}
 		},
@@ -95,40 +56,42 @@
 		},
 		onPullDownRefresh(e) {
 			console.log(e)
-			this.patch(1).then(res => {
+			this.refresh().finally(() => {
 				wx.stopPullDownRefresh()
 			})
 		},
+		onReachBottom(e) {
+			if (this.loading || this.recordCount <= this.items.length) return;
+			this.loading = true;
+			this.patch(this.pageIndex)
+				.catch(() => 0).finally(() => this.loading = false)
+		},
 		methods: {
-			patch(pageIndex) {
-				return api.cases(1, 20).then(res => {
-					this.items = res.data.map(v => ({
-						...v,
-						steps: STEPS.slice(1).map(x => ({
-							...x,
-							desc: v[x.timeKey]
-						}))
-					}));
-					console.log(this.items)
+			refresh() {
+				this.recordCount = 0;
+				return this.patch(this.pageIndex = 1).catch(() => this.items = [])
+			},
+			patch(pageIndex : number) {
+				return api.cases(this.query, pageIndex).then(({ data, recordCount }) => {
+					this.recordCount = recordCount;
+					this.items = pageIndex == 1 ? this.map(data) : [...this.items, ...this.map(data)]
+					this.pageIndex = pageIndex + 1;
+					console.log(this.items.slice(0, 2))
 					// this.items = []
-				}).catch(ex => {
-					this.items = []
 				})
 			},
-			openModal() {
-				this.show = true;
-				this.tempQuery = {
-					...this.query
-				}
+			map(data : any[]) {
+				return (data || []).map(v => ({
+					...v,
+					steps: STEPS.map(x => ({
+						...x,
+						desc: v[x.timeKey]
+					}))
+				}));
 			},
-			goDetail(item){
-				wx.navigateTo({url:`/pages/case/case?item=${JSON.stringify(item)}`})
-			},
-			save() {
-				this.query = {
-					...this.tempQuery
-				}
-				this.show = false
+			save(e) {
+				console.log(e);
+				this.query = { ...e };
 				this.pageIndex = 1
 				this.patch(this.pageIndex);
 			}
@@ -137,93 +100,6 @@
 </script>
 
 <style lang="scss" scoped>
-	page{
-		--label-width:34px;
-	}
-	.title {
-		font-size: 16px;
-
-		text {
-			margin-left: 10px;
-		}
-	}
-
-	.flex-between {
-		--tag-padding: 2px 10px;
-		--tag-round-border-radius: 8px;
-	}
-
-	.nav-bar {
-		background: #fff;
-	}
-
-	.rows {
-		justify-content: space-between;
-	}
-
-	.margin-item {
-		margin: 12px 0;
-		white-space: nowrap;
-	}
-	
-	.label {
-		font-size: 14px;
-		width: var(--label-width);
-		flex:1;
-		display: inline-block;
-	}
-
-	.item-button {
-		margin-left: 10px;
-		background: #f8f8f8;
-		font-size: 13px;
-		border-radius: 2px;
-		display: inline-block;
-		padding: 5px 12px;
-		color: #333;
-
-		&.active {
-			background: rgb(230, 247, 255);
-			color: #1989fa;
-		}
-	}
-
-
-
-	.van-button {
-		border-color: transparent;
-		background: #f1f1f1;
-	}
-
-	// .dropdown-menu {
-	// 	width: 100%;
-
-	// 	.van-dropdown-menu__item {
-	// 		justify-content: start;
-
-	// 		&[data-index="0"] {
-	// 			flex: 1 0 80px !important;
-	// 			width: 80px !important;
-	// 			max-width: 80px !important;
-	// 		}
-	// 	}
-
-	// 	.van-dropdown-menu {
-	// 		background: transparent;
-	// 		box-shadow: none;
-	// 	}
-	// }
-.scroller{
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	.scroll-x{
-		--scroll-width:calc(100% - var(--label-width));
-		flex:1 0 var(--scroll-width);
-		max-width:var(--scroll-width);
-		width: var(--scroll-width);
-	}
-}
 	.end-line {
 		font-size: 13px;
 		color: #777;

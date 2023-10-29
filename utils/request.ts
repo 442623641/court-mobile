@@ -1,31 +1,30 @@
 /**
-       request.js
-     * 封装一个Promise风格的通用请求
-     * url - 请求地址
-     * option - 包含请求方式、请求参数的配置对象
+	   request.js
+	 * 封装一个Promise风格的通用请求
+	 * url - 请求地址
+	 * option - 包含请求方式、请求参数的配置对象
  */
 import {
 	Tools
 } from '../utils/tools'
-const request = function(url, options) {
-	const app = getApp(); //引入全局app.js
+const request = function (url : string, options ?: any) {
+	const { globalData } = getApp(); //引入全局app.js
 	return new Promise((resolve, reject) => {
 		wx.request({
-			url: app.globalData.baseUrl + url,
+			url: globalData.baseUrl + url,
 			method: options.method,
 			data: exNull(options.data),
 			// header这里根据业务情况自行选择需要还是不需要
-			header: {
-				'Authorization': 'Bearer ' + app.globalData.token
-			},
-			success(res) {
+			header: globalData.token ? {
+				'Authorization': 'Bearer ' + globalData.token
+			} : {},
+			success(res : any) {
 				switch (res.statusCode) {
 					case 200:
-						return resolve(res.data)
+						return resolve(<any>res.data)
 					case 405:
-						Tools.toast(res.data?.message)
-						res.data.message = ' '
-						break;
+						Tools.toast(res.data?.['message'])
+						return reject({ ...res.data, toasted: true })
 					case 401:
 						logout()
 						break;
@@ -53,19 +52,23 @@ const exNull = (obj) => {
 	return nobj;
 };
 export const logout = () => {
+	const { globalData } = getApp();
+	globalData.token = '';
+	globalData.userInfo = {};
 	wx.clearStorageSync()
-	wx.redirectTo('/pages/login/login')
+	wx.redirectTo({ url: '/pages/login/login' })
+
 }
 export default {
 	//封装get方法
-	get(url, data) {
+	get(url : string, data ?: any) {
 		return request(url, {
 			method: "GET",
 			data
 		})
 	},
 	//封装post方法
-	post(url, data) {
+	post(url : string, data ?: any) {
 		return request(url, {
 			method: "POST",
 			data

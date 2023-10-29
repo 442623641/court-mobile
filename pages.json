@@ -3,8 +3,9 @@
 		{
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "登录",
-				"enablePullDownRefresh": true,
+				"backgroundColor": "#FFFFFF",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
 				"usingComponents": {
 					"van-field": "/wxcomponents/vant/field/index"
 				}
@@ -14,40 +15,38 @@
 			"path": "pages/index/index",
 			"style": {
 				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100,
 				"navigationStyle": "custom",
 				"usingComponents": {
-					"van-empty": "/wxcomponents/vant/empty/index",
+					"van-loading": "/wxcomponents/vant/loading/index"
+					// "van-empty": "/wxcomponents/vant/empty/index",
 					// "van-tabbar": "/wxcomponents/vant/tabbar/index",
 					// "van-tabbar-item": "/wxcomponents/vant/tabbar-item/index",
 					// "van-search": "/wxcomponents/vant/search/index",
-					"van-popup": "/wxcomponents/vant/popup/index",
-					"van-icon": "/wxcomponents/vant/icon/index",
+					// "van-popup": "/wxcomponents/vant/popup/index"
 					// "van-dropdown-menu": "/wxcomponents/vant/dropdown-menu/index",
 					// "van-dropdown-item": "/wxcomponents/vant/dropdown-item/index",
-					"van-row": "/wxcomponents/vant/row/index",
-					"van-col": "/wxcomponents/vant/col/index",
-					"van-tag": "/wxcomponents/vant/tag/index",
-					"van-steps": "/wxcomponents/vant/steps/index"
-					
+
+
 				}
 			}
 		}, {
 			"path": "pages/chart/chart",
 			"style": {
-				"navigationBarTitleText": "图表",
+				"navigationStyle": "custom",
 				"enablePullDownRefresh": false,
 				"usingComponents": {
 					"van-cell": "/wxcomponents/vant/cell/index",
-					"qiun-wx-ucharts":"/wxcomponents/qiun-wx-ucharts/index"
+					"qiun-wx-ucharts": "/wxcomponents/qiun-wx-ucharts/index"
 				}
 			}
 
 		}, {
 			"path": "pages/my/my",
 			"style": {
-				// "navigationBarTitleText": "个人中心",
+				"navigationBarTitleText": "个人中心",
 				"enablePullDownRefresh": false,
-				"navigationStyle": "custom",
+				// "navigationStyle": "custom",
 				"usingComponents": {
 					"van-cell": "/wxcomponents/vant/cell/index"
 				}
@@ -62,37 +61,43 @@
 				}
 			}
 
-		}
-	    ,{
-            "path" : "pages/case/case",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "案件详情",
-                "enablePullDownRefresh": false,
+		}, {
+			"path": "pages/case/case",
+			"style": {
+				"navigationBarTitleText": "案件详情",
+				"enablePullDownRefresh": false,
 				"usingComponents": {
 					"van-cell": "/wxcomponents/vant/cell/index",
 					"van-field": "/wxcomponents/vant/field/index",
-					"van-icon": "/wxcomponents/vant/icon/index",
-					"van-steps": "/wxcomponents/vant/steps/index",
 					"van-switch": "/wxcomponents/vant/switch/index"
 				}
-            }
-            
-        }
-    ],
+			}
+
+		}
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "田家庵法院",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
 		"usingComponents": {
 			"van-cell-group": "/wxcomponents/vant/cell-group/index",
-			"van-button": "/wxcomponents/vant/button/index"
+			"van-button": "/wxcomponents/vant/button/index",
+			"van-steps": "/wxcomponents/vant/steps/index",
+			"van-icon": "/wxcomponents/vant/icon/index",
+			"van-tag": "/wxcomponents/vant/tag/index",
+			"van-row": "/wxcomponents/vant/row/index",
+			"van-col": "/wxcomponents/vant/col/index",
+			"van-nav-bar": "/wxcomponents/vant/nav-bar/index",
+			"van-popup": "/wxcomponents/vant/popup/index",
+			"van-empty": "/wxcomponents/vant/empty/index"
 		}
 	},
 	"tabBar": {
 		"color": "#646566",
 		"selectedColor": "#1989fa",
+		"backgroundColor": "white",
+		"borderStyle": "white",
 		"list": [{
 				"current": 0,
 				"pagePath": "pages/index/index",
@@ -103,7 +108,7 @@
 			{
 				"current": 1,
 				"pagePath": "pages/chart/chart",
-				"text": "图表",
+				"text": "看板",
 				"iconPath": "/static/chart.png",
 				"selectedIconPath": "/static/chart-active.png"
 			},

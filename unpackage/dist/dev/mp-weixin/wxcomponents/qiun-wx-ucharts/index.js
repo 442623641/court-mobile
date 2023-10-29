@@ -16,8 +16,8 @@
  * 
  */
 
-import uCharts from 'u-charts.js';
-import cfu from 'config-ucharts.js';
+import uCharts from 'u-charts';
+import cfu from 'config-ucharts';
 
 function deepCloneAssign(origin = {}, ...args) {
   for (let i in args) {

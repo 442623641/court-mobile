@@ -2,25 +2,24 @@
 const common_vendor = require("../common/vendor.js");
 const utils_tools = require("./tools.js");
 const request = function(url, options) {
-  const app = getApp();
+  const { globalData } = getApp();
   return new Promise((resolve, reject) => {
     common_vendor.wx$1.request({
-      url: app.globalData.baseUrl + url,
+      url: globalData.baseUrl + url,
       method: options.method,
       data: exNull(options.data),
       // header这里根据业务情况自行选择需要还是不需要
-      header: {
-        "Authorization": "Bearer " + app.globalData.token
-      },
+      header: globalData.token ? {
+        "Authorization": "Bearer " + globalData.token
+      } : {},
       success(res) {
         var _a;
         switch (res.statusCode) {
           case 200:
             return resolve(res.data);
           case 405:
-            utils_tools.Tools.toast((_a = res.data) == null ? void 0 : _a.message);
-            res.data.message = " ";
-            break;
+            utils_tools.Tools.toast((_a = res.data) == null ? void 0 : _a["message"]);
+            return reject({ ...res.data, toasted: true });
           case 401:
             logout();
             break;
@@ -49,8 +48,11 @@ const exNull = (obj) => {
   return nobj;
 };
 const logout = () => {
+  const { globalData } = getApp();
+  globalData.token = "";
+  globalData.userInfo = {};
   common_vendor.wx$1.clearStorageSync();
-  common_vendor.wx$1.redirectTo("/pages/login/login");
+  common_vendor.wx$1.redirectTo({ url: "/pages/login/login" });
 };
 const request$1 = {
   //封装get方法

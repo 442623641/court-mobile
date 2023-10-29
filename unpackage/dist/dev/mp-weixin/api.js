@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("./common/vendor.js");
+const utils_common = require("./utils/common.js");
 const utils_request = require("./utils/request.js");
 const api = {
   // 登录
@@ -12,16 +13,14 @@ const api = {
         utils_request.request.post("WXInfo/WXLogin", {
           ...data,
           code
-        }).then((res) => {
+        }).then((token) => {
+          common_vendor.wx$1.setStorageSync("token", token);
           const {
             globalData
           } = getApp();
-          globalData.token = res;
-          console.log(res);
-          globalData.userInfo = JSON.parse(decodeURIComponent(escape(atob(res.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")))));
-          console.log(globalData.userInfo);
-          common_vendor.wx$1.setStorageSync("userInfo", globalData.userInfo);
-          resolve(res);
+          globalData.token = token;
+          globalData.userInfo = utils_common.deJWT(token);
+          resolve(globalData.userInfo);
         }).catch((ex) => reject(ex));
       },
       fail(ex) {
@@ -29,10 +28,10 @@ const api = {
       }
     }));
   },
-  cases(data) {
+  cases(data, pageIndex = 1) {
     return utils_request.request.get("court/pages", {
-      pageIndex: 1,
-      pageSize: 20,
+      pageIndex,
+      pageSize: 10,
       ...data
     });
   },
@@ -41,6 +40,21 @@ const api = {
       oldPassword,
       password
     });
+  },
+  users(type) {
+    return utils_request.request.get("Court/SelectUser", { type });
+  },
+  departments() {
+    return utils_request.request.get("department/Select");
+  },
+  setRefund(data) {
+    return utils_request.request.post("Court/MyRefund", data);
+  },
+  statistics() {
+    return utils_request.request.get("Court/Statistics");
+  },
+  refundRate() {
+    return utils_request.request.get("Court/RefundRate");
   }
 };
 exports.api = api;

@@ -1,13 +1,14 @@
-<script>
-	import api from '/api.js'
+<script lang="ts">
+	import api from './api'
+	import { deJWT } from './utils/common';
 	export default {
 		globalData: {
 			baseUrl: 'http://101.35.156.42:8090/api/',
 			userInfo: {},
 			navbar: {},
-			token:''
+			token: ''
 		},
-		onLaunch: function() {
+		onLaunch: function () {
 			console.log('App Launch')
 			const that = this;
 			// 获取系统信息
@@ -22,26 +23,21 @@
 				paddingBottom: `${menuButtonInfo.top - systemInfo.statusBarHeight}px`,
 				paddingLeft: '16px'
 			}
-			// that.globalData.navbar.navbarHeight = systemInfo.statusBarHeight + 44;
-			// that.globalData.navbar.menuRight = systemInfo.screenWidth - menuButtonInfo.right;
-			// that.globalData.navbar.menuBotton = menuButtonInfo.top - systemInfo.statusBarHeight;
-			// that.globalData.navbar.menuHeight = menuButtonInfo.height;
-
-			const userInfo = wx.getStorageSync('userInfo')
-			if (userInfo && userInfo.openid) {
-				that.globalData.userInfo=userInfo
+			const token = wx.getStorageSync('token');
+			let userInfo = null;
+			if (token) {
+				userInfo = deJWT(token);
+			}
+			if (userInfo?.openid) {
+				that.globalData.token = token
+				that.globalData.userInfo = userInfo
 				wx.switchTab({
 					url: 'pages/index/index'
 				})
+				console.log(userInfo);
 			} else {
 				api.login()
 			}
-		},
-		onShow: function() {
-			console.log('App Show')
-		},
-		onHide: function() {
-			console.log('App Hide')
 		}
 	}
 </script>
@@ -66,14 +62,17 @@
 		align-items: center;
 		box-sizing: border-box;
 	}
+
 	.login-button {
 		text-align: center;
 		padding: 10px 16px;
 		margin-top: 20px;
 	}
-.block{
-	display: block;
-}
+
+	.block {
+		display: block;
+	}
+
 	.card {
 		background: #ffffff;
 		padding: 16px;
@@ -95,7 +94,12 @@
 		justify-content: space-between;
 		align-items: center;
 	}
-.van-step--horizontal {
+
+	.margin-top .van-empty {
+		margin-top: 35%;
+	}
+
+	.van-step--horizontal {
 		padding-bottom: 0 !important;
 
 		.van-step__circle-container {
@@ -122,11 +126,13 @@
 
 			}
 		}
+
 		.van-step__line {
 			top: 50%;
 			transform: translate3d(0, -50%, 0) !important;
 		}
 	}
+
 	.list {
 		&::before {
 			content: '';
@@ -135,6 +141,10 @@
 		}
 
 		margin-bottom: 32px;
+	}
+
+	.padding-h-10 {
+		padding: 0 10px;
 	}
 
 	.margin-v-10 {
@@ -195,15 +205,42 @@
 		--tag-text-color: transparent !important;
 
 		.skeleton-item {
-			border-radius: 5px;
-			color: transparent !important;
-			background-color: var(--skeleton-color);
+
+			&,
+			view,
+			text {
+				border-radius: 5px;
+				color: transparent !important;
+				background-color: var(--skeleton-color);
+			}
+
 		}
 
 		@keyframes shimmer {
 			50% {
 				opacity: 0.6;
 			}
+		}
+	}
+
+	.avatar {
+		background-color: rgb(255, 191, 0);
+		vertical-align: middle;
+		width: 36px;
+		height: 36px;
+		line-height: 34px;
+		border-radius: 50%;
+		color: #fff;
+		font-size: 14px;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		white-space: nowrap;
+		margin-right: 8px;
+		overflow: hidden;
+
+		.small {
+			font-size: 12px;
 		}
 	}
 </style>
