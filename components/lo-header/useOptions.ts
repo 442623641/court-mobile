@@ -6,7 +6,6 @@ const options = ref([]);
 
 export function useOptions() {
 	const { globalData: { userInfo } } = getApp();
-	console.log(options.value);
 	if (options.value?.length) return options;
 	if (userInfo.roleCode == 8 || 1) {
 		api.departments().then(data => options.value.push({

@@ -23,24 +23,47 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.end-line.data-v-1cf27b2a {
+.my-nav-bar {
+  --search-padding: 2px 12px;
+}
+.my-nav-bar .van-nav-bar__title {
+  margin-left: 2px;
+  margin-right: var(--margin-left);
+  max-width: unset !important;
+  margin-top: 2px !important;
+}
+.action-button {
+  color: #777;
+  padding: 0 10px;
+  background: #ccc;
+}
+.action-button:hover {
+  background: #b2b2b2;
+}
+.history-labels {
+  padding: 0 11px 16px 11px;
+}
+.history-labels .history-label {
+  background: #f8f8f8;
+  padding: 5px 12px;
+  margin: 5px;
+  border-radius: 4px;
+  font-size: 13px;
+  display: inline-block;
+  transition: background 0.2s;
+  max-width: calc(50% - 10px);
+  display: inline-block;
+}
+.history-labels .history-label:active {
+  background: #ddd;
+}
+.end-line {
   font-size: 13px;
   color: #777;
   padding: 5px;
   margin-bottom: 5px;
   text-align: center;
 }
-.end-line.data-v-1cf27b2a::before {
+.end-line::before {
   content: "我是有底线的～";
-}
-.search-button.data-v-1cf27b2a {
-  --cell-background-color: var(--search-background-color, #f7f8fa);
-  --cell-vertical-padding: 5px;
-  --cell-horizontal-padding: var(--padding-sm, 12px);
-  width: 260px;
-  overflow: hidden;
-  border-radius: 2px;
-  display: flex;
-  flex: 1;
-  margin-left: 10px;
 }

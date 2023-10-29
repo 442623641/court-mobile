@@ -1,5 +1,5 @@
 <template>
-	<lo-header title="看板" :query='query' @filter-save='save' />
+	<lo-header :query='query' @filter-save='save'><template slot='title'>看板</template></lo-header>
 	<scroll-view v-if='chartData' scroll-y :style="`padding-top:${navbar.height}`" :class="{loading:!chartData.length}">
 		<template v-if='chartData?.length'>
 			<qiun-wx-ucharts :canvas-id="`canvas${index}`" :inScrollView='true' :canvas2d="true"

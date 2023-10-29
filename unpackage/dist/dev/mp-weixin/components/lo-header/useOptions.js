@@ -6,7 +6,6 @@ const options = common_vendor.ref([]);
 function useOptions() {
   var _a;
   const { globalData: { userInfo } } = getApp();
-  console.log(options.value);
   if ((_a = options.value) == null ? void 0 : _a.length)
     return options;
   if (userInfo.roleCode == 8 || 1) {

@@ -1,7 +1,5 @@
 {
   "navigationBarTitleText": "个人中心",
   "enablePullDownRefresh": false,
-  "usingComponents": {
-    "van-cell": "../../wxcomponents/vant/cell/index"
-  }
+  "usingComponents": {}
 }

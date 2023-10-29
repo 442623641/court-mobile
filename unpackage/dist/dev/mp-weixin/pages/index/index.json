@@ -3,7 +3,7 @@
   "onReachBottomDistance": 100,
   "navigationStyle": "custom",
   "usingComponents": {
-    "van-loading": "../../wxcomponents/vant/loading/index",
+    "van-notice-bar": "../../wxcomponents/vant/notice-bar/index",
     "lo-header": "../../components/lo-header/lo-header",
     "case-card": "../../components/case-card/case-card"
   }

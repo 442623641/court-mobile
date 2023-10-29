@@ -8,6 +8,7 @@ require("../../utils/tools.js");
 const _sfc_main = {
   data() {
     return {
+      notices: {},
       loading: false,
       pageIndex: 1,
       recordCount: 0,
@@ -15,41 +16,30 @@ const _sfc_main = {
       userInfo: getApp().globalData.userInfo,
       query: {},
       options: [
+        // 	{
+        // 	text: '状态',
+        // 	children: STEPS.reduce((prev, curr) => { prev[curr.value] = curr.text; return prev }, {}),
+        // 	value: 'state',
+        // },
         {
           text: "状态",
-          children: constant.STEPS.reduce((prev, curr) => {
-            prev[curr.value] = curr.text;
-            return prev;
-          }, {}),
-          value: "state"
-        },
-        {
-          text: "退费",
           children: constant.enum2Object(constant.STATES),
-          value: "isRefund"
+          value: "step"
         }
       ],
-      tempQuery: {},
-      departments: null,
-      items: Array.from({
-        length: 3
-      }, (index) => ({
-        id: index,
-        loading: true,
-        clerker: "一二三",
-        no: "(2021)皖0403民32号",
-        processer: "张三",
-        steps: [],
-        step: 0,
-        state: 1
-      }))
+      items: Array(3).fill(null)
     };
   },
-  onLoad() {
-    this.patch(1);
+  onLoad(opt) {
+    console.log(opt);
+    if (opt.items) {
+      this.items = JSON.parse(opt.items);
+      this.items[0].tt = true;
+    } else {
+      this.refresh();
+    }
   },
-  onPullDownRefresh(e) {
-    console.log(e);
+  onPullDownRefresh() {
     this.refresh().finally(() => {
       common_vendor.wx$1.stopPullDownRefresh();
     });
@@ -68,34 +58,31 @@ const _sfc_main = {
     patch(pageIndex) {
       return api.api.cases(this.query, pageIndex).then(({ data, recordCount }) => {
         this.recordCount = recordCount;
-        this.items = pageIndex == 1 ? this.map(data) : [...this.items, ...this.map(data)];
-        this.pageIndex = pageIndex + 1;
-        console.log(this.items.slice(0, 2));
+        this.items = pageIndex == 1 ? data : [...this.items, ...data];
+        this.pageIndex += 1;
       });
-    },
-    map(data) {
-      return (data || []).map((v) => ({
-        ...v,
-        steps: constant.STEPS.map((x) => ({
-          ...x,
-          desc: v[x.timeKey]
-        }))
-      }));
     },
     save(e) {
       console.log(e);
+      if (!e)
+        return;
       this.query = { ...e };
-      this.pageIndex = 1;
-      this.patch(this.pageIndex);
+      this.refresh();
+    },
+    goPendding() {
+      console.log("goPendding");
+      common_vendor.wx$1.navigateTo({ url: `/pages/index/index?items=${JSON.stringify(this.items.slice(0, 10))}` });
     }
   }
 };
 if (!Array) {
+  const _component_van_cell = common_vendor.resolveComponent("van-cell");
   const _easycom_lo_header2 = common_vendor.resolveComponent("lo-header");
+  const _component_van_notice_bar = common_vendor.resolveComponent("van-notice-bar");
   const _easycom_case_card2 = common_vendor.resolveComponent("case-card");
   const _component_van_loading = common_vendor.resolveComponent("van-loading");
   const _component_van_empty = common_vendor.resolveComponent("van-empty");
-  (_easycom_lo_header2 + _easycom_case_card2 + _component_van_loading + _component_van_empty)();
+  (_component_van_cell + _easycom_lo_header2 + _component_van_notice_bar + _easycom_case_card2 + _component_van_loading + _component_van_empty)();
 }
 const _easycom_lo_header = () => "../../components/lo-header/lo-header.js";
 const _easycom_case_card = () => "../../components/case-card/case-card.js";
@@ -103,39 +90,62 @@ if (!Math) {
   (_easycom_lo_header + _easycom_case_card)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
   return common_vendor.e({
-    a: common_vendor.o($options.save),
+    a: !((_b = (_a = $data.items) == null ? void 0 : _a[0]) == null ? void 0 : _b.tt)
+  }, !((_d = (_c = $data.items) == null ? void 0 : _c[0]) == null ? void 0 : _d.tt) ? {
     b: common_vendor.p({
-      title: "首页",
+      border: false,
+      clickable: true,
+      customClass: "search-button",
+      icon: "search",
+      titleStyle: "color:rgba(0,0,0,.12);text-align:left;title-width:80%",
+      title: "请输入搜索关键词",
+      url: "/pages/search/search"
+    })
+  } : {}, {
+    c: common_vendor.o($options.save),
+    d: common_vendor.p({
+      title: "待处理列表",
       filters: $data.options,
       query: $data.query
     }),
-    c: (_a = $data.items) == null ? void 0 : _a.length
-  }, ((_b = $data.items) == null ? void 0 : _b.length) ? {
-    d: common_vendor.f($data.items, (item, k0, i0) => {
+    e: (_e = $data.items) == null ? void 0 : _e.length
+  }, ((_f = $data.items) == null ? void 0 : _f.length) ? common_vendor.e({
+    f: $data.notices
+  }, $data.notices ? {
+    g: common_vendor.t(5),
+    h: common_vendor.t(3),
+    i: common_vendor.o($options.goPendding),
+    j: common_vendor.p({
+      mode: "link",
+      color: "#1989fa",
+      background: "#ecf9ff",
+      leftIcon: "volume-o"
+    })
+  } : {}, {
+    k: common_vendor.f($data.items, (item, k0, i0) => {
       return {
-        a: item.id,
-        b: "1cf27b2a-1-" + i0,
+        a: item == null ? void 0 : item.id,
+        b: "1cf27b2a-3-" + i0,
         c: common_vendor.p({
-          item
+          dataItem: item
         })
       };
     }),
-    e: common_vendor.s(`padding-top:${$data.navbar.height}`),
-    f: $data.items[0].loading ? 1 : ""
-  } : {}, {
-    g: ((_c = $data.items) == null ? void 0 : _c.length) > 2 && ((_d = $data.items) == null ? void 0 : _d.length) == $data.recordCount
-  }, ((_e = $data.items) == null ? void 0 : _e.length) > 2 && ((_f = $data.items) == null ? void 0 : _f.length) == $data.recordCount ? {} : {}, {
-    h: ((_g = $data.items) == null ? void 0 : _g.length) < $data.recordCount
-  }, ((_h = $data.items) == null ? void 0 : _h.length) < $data.recordCount ? {
-    i: common_vendor.p({
+    l: common_vendor.s(`padding-top:${$data.navbar.height}`)
+  }) : {}, {
+    m: ((_g = $data.items) == null ? void 0 : _g.length) > 2 && ((_h = $data.items) == null ? void 0 : _h.length) == $data.recordCount
+  }, ((_i = $data.items) == null ? void 0 : _i.length) > 2 && ((_j = $data.items) == null ? void 0 : _j.length) == $data.recordCount ? {} : {}, {
+    n: ((_k = $data.items) == null ? void 0 : _k.length) < $data.recordCount
+  }, ((_l = $data.items) == null ? void 0 : _l.length) < $data.recordCount ? {
+    o: common_vendor.p({
       type: "spinner"
     })
   } : {}, {
-    j: !((_i = $data.items) == null ? void 0 : _i.length)
-  }, !((_j = $data.items) == null ? void 0 : _j.length) ? {
-    k: common_vendor.p({
+    p: !((_m = $data.items) == null ? void 0 : _m.length)
+  }, !((_n = $data.items) == null ? void 0 : _n.length) ? {
+    q: common_vendor.p({
       description: "暂无数据"
     })
   } : {});

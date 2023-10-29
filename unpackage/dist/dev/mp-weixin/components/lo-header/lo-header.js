@@ -19,7 +19,6 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   },
   emits: ["filter-save"],
   setup(__props, { emit: emits }) {
-    const header = common_vendor.ref();
     const show = common_vendor.ref();
     const onClose = (e) => {
       emits("filter-save", e);
@@ -32,21 +31,17 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           name: "filter-o",
           size: "18"
         }),
-        c: common_vendor.sr(header, "d1052afe-0", {
-          "k": "header"
-        }),
-        d: common_vendor.p({
+        c: common_vendor.p({
           fixed: true,
-          title: __props.title,
           border: false,
           zIndex: "11"
         }),
-        e: common_vendor.o(onClose),
-        f: common_vendor.p({
+        d: common_vendor.o(onClose),
+        e: common_vendor.p({
           query: __props.query,
           filters: __props.filters
         }),
-        g: common_vendor.p({
+        f: common_vendor.p({
           rootPortal: true,
           customStyle: "padding-top:60px",
           position: "top",

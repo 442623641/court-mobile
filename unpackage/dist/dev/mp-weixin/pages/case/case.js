@@ -17,12 +17,13 @@ const _sfc_main = {
   onLoad({
     item
   }) {
+    var _a;
     this.item = JSON.parse(item);
     console.log(this.item);
     this.needRefund = !!this.item.refund;
     this.isRefund = !!this.item.isRefund;
     const split = `<span style='margin-inline:8px;transform:scale(.3);opacity:.15'>|</span>`;
-    this.item.text = `<div>${this.item.litigant.replace(";", split).replace("；", split)}</div>`;
+    this.item.text = `<div>${(_a = this.item.litigant) == null ? void 0 : _a.replace(";", split).replace("；", split)}</div>`;
     if (this.item.activeCourtDate) {
       this.eDays = 15 - utils_common.diffDays(this.item.activeCourtDate);
     }
@@ -40,8 +41,9 @@ const _sfc_main = {
         p.refund = 0;
       }
       this.loading = true;
-      api.api.setRefund(p).then(() => {
+      api.api.setRefund(p).then((res) => {
         utils_tools.Tools.toast("保存成功", true);
+        this.getOpenerEventChannel().emit("updateCase", res);
         setTimeout(() => common_vendor.wx$1.navigateBack({}), 2300);
       }).catch(({ toasted }) => toasted || utils_tools.Tools.toast(-1)).finally(() => this.loading = false);
     }

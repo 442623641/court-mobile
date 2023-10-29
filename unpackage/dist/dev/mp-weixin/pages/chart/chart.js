@@ -88,7 +88,6 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       return common_vendor.e({
         a: common_vendor.o(save),
         b: common_vendor.p({
-          title: "看板",
           query: query.value
         }),
         c: chartData.value

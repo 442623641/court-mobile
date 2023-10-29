@@ -1,0 +1,9 @@
+{
+  "enablePullDownRefresh": false,
+  "onReachBottomDistance": 100,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "van-search": "../../wxcomponents/vant/search/index",
+    "case-card": "../../components/case-card/case-card"
+  }
+}

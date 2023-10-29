@@ -2,7 +2,7 @@
 	<view style="padding: 0 16px 16px;">
 		<view class="margin-item scroller" v-for="op of dataSource" :key="op.value">
 			<view class="label">{{op.text}}</view>
-			<scroll-view scroll-x>
+			<scroll-view scroll-x class="scroll-view">
 				<view :class="{active:!tempQuery[op.value]}" @click="tempQuery[op.value]=''" class="item-button">全部
 				</view>
 				<view v-for='(v,k) in op.children' :key="k" :class="{active:tempQuery[op.value]==k}"
@@ -20,7 +20,7 @@
 	</view>
 </template>
 <script setup lang="ts">
-	import { computed, ref } from 'vue';
+	import { computed, onMounted, ref, watch } from 'vue';
 	import { useOptions } from './useOptions';
 	const props = defineProps({
 		query: Object,
@@ -33,14 +33,12 @@
 	const save = () => {
 		emits('close', tempQuery.value)
 	}
-	setTimeout(() => console.log(props.filters, dataSource), 1500);
+	watch(() => props.query, (vals) => {
+		tempQuery.value = { ...(vals || {}) };
+	})
 </script>
 
 <style lang="scss" scoped>
-	.rows {
-		justify-content: space-between;
-	}
-
 	// .dropdown-menu {
 	// 	width: 100%;
 
@@ -60,16 +58,18 @@
 	// 	}
 	// }
 	.scroller {
-		--label-width: 34px;
+		--label-width: 36px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		--scroll-width: calc(100% - var(--label-width));
 
-		scroll-view {
+		.scroll-view {
 			flex: 1;
-			overflow-x: auto;
 			text-align: left;
+			width: var(--scroll-width);
+			max-width: var(--scroll-width);
+			min-width: var(--scroll-width);
 		}
 	}
 

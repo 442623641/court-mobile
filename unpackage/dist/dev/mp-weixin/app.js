@@ -12,6 +12,7 @@ if (!Math) {
   "./pages/my/my.js";
   "./pages/password/password.js";
   "./pages/case/case.js";
+  "./pages/search/search.js";
 }
 const _sfc_main = {
   globalData: {

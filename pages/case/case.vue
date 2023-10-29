@@ -14,8 +14,8 @@
 					<van-switch size='20px' :checked="needRefund" @change='needRefund=$event.detail' />
 				</van-cell>
 				<template v-if="needRefund">
-					<van-field :value='item.refund' @change='item.refund=$event.detail' right-icon='bill-o' label='退费金额' type='digit' input-align="right"
-						placeholder='输入退费金额' />
+					<van-field :value='item.refund' @change='item.refund=$event.detail' right-icon='bill-o' label='退费金额'
+						type='digit' input-align="right" placeholder='输入退费金额' />
 					<van-cell title="是否已退费" :border='!isRefund'>
 						<van-switch size='20px' :checked="isRefund" @change='isRefund=$event.detail' />
 					</van-cell>
@@ -68,7 +68,7 @@
 			this.needRefund = !!this.item.refund;
 			this.isRefund = !!this.item.isRefund;
 			const split = `<span style='margin-inline:8px;transform:scale(.3);opacity:.15'>|</span>`
-			this.item.text = `<div>${this.item.litigant.replace(';', split).replace('；', split)}</div>`
+			this.item.text = `<div>${this.item.litigant?.replace(';', split).replace('；', split)}</div>`
 			if (this.item.activeCourtDate) {
 				this.eDays = 15 - diffDays(this.item.activeCourtDate);
 			}
@@ -86,8 +86,9 @@
 					p.refund = 0;
 				}
 				this.loading = true;
-				api.setRefund(p).then(() => {
-					Tools.toast('保存成功', true)
+				api.setRefund(p).then((res) => {
+					Tools.toast('保存成功', true);
+					this.getOpenerEventChannel().emit('updateCase', res);
 					setTimeout(() => wx.navigateBack({}), 2300)
 				}).catch(({ toasted }) => toasted || Tools.toast(-1)).finally(() => this.loading = false)
 			}

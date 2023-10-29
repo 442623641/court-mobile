@@ -27,7 +27,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const save = () => {
       emits("close", tempQuery.value);
     };
-    setTimeout(() => console.log(props.filters, dataSource), 1500);
+    common_vendor.watch(() => props.query, (vals) => {
+      tempQuery.value = { ...vals || {} };
+    });
     return (_ctx, _cache) => {
       return {
         a: common_vendor.f(common_vendor.unref(dataSource), (op, k0, i0) => {

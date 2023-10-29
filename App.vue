@@ -63,6 +63,16 @@
 		box-sizing: border-box;
 	}
 
+	.has-search .van-nav-bar__content {
+		display: flex;
+		align-items: center;
+
+		.van-nav-bar__title {
+			margin-left: 36px;
+			--search-padding: 6px 12px;
+		}
+	}
+
 	.login-button {
 		text-align: center;
 		padding: 10px 16px;
@@ -96,7 +106,7 @@
 	}
 
 	.margin-top .van-empty {
-		margin-top: 35%;
+		margin-top: 30%;
 	}
 
 	.van-step--horizontal {

@@ -1,7 +1,7 @@
 {
     "name" : "court",
-    "appid" : "",
-    "description" : "",
+    "appid" : "__UNI__C282EC1",
+    "description" : "淮南市田家庵区人民法院",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -50,11 +50,14 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wx3e810cc3d27f46f6",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "postcss" : false,
+            "minified" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+		"lazyCodeLoading": "requiredComponents"
     },
     "mp-alipay" : {
         "usingComponents" : true
@@ -68,5 +71,7 @@
     "uniStatistics" : {
         "enable" : false
     },
-    "vueVersion" : "3"
+    "vueVersion" : "3",
+    "locale" : "zh-Hans",
+    "fallbackLocale" : "zh-Hans"
 }
