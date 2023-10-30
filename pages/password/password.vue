@@ -1,12 +1,12 @@
 <template>
 	<view>
 		<form @submit="submit">
-			<van-field :value='password' @change='password=$event.detail' title-width='4.2em'
-				:icon="isEye?'eye-o':'closed-eye'" :type="isEye?'text':'password'" label='原密码' placeholder="请输入原密码"
-				@click-icon='isEye=!isEye' />
-			<van-field :value='newPassword' @change='newPassword=$event.detail' title-width='4.2em'
-				:type="isEye?'text':'password'" label='新密码' placeholder="请输入新密码" />
-			<van-field title-width='4.2em' :type="isEye?'text':'password'" label='确认密码' :value="confirmPassword"
+			<!-- @click-icon='isEye=!isEye' :icon="isEye?'eye-o':'closed-eye'" -->
+			<van-field :value='password' @change='password=$event.detail' title-width='4.2em' type='password'
+				label='原密码' placeholder="请输入原密码" />
+			<van-field :value='newPassword' @change='newPassword=$event.detail' title-width='4.2em' type='password'
+				label='新密码' placeholder="请输入新密码" />
+			<van-field title-width='4.2em' type='password' label='确认密码' :value="confirmPassword"
 				@change="confirmPassword = $event.detail" placeholder="请输入确认密码" :border="false" />
 			<div class="login-button">
 				<view>

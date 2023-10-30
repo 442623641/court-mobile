@@ -23,7 +23,7 @@ const _sfc_main = {
     this.needRefund = !!this.item.refund;
     this.isRefund = !!this.item.isRefund;
     const split = `<span style='margin-inline:8px;transform:scale(.3);opacity:.15'>|</span>`;
-    this.item.text = `<div>${(_a = this.item.litigant) == null ? void 0 : _a.replace(";", split).replace("；", split)}</div>`;
+    this.item.text = `<div style='font-size:16px'>${(_a = this.item.litigant) == null ? void 0 : _a.replace(";", split).replace("；", split)}</div>`;
     if (this.item.activeCourtDate) {
       this.eDays = 15 - utils_common.diffDays(this.item.activeCourtDate);
     }
@@ -68,24 +68,23 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     c: common_vendor.n(`state-current state-${$data.item.step}`),
     d: common_vendor.p({
-      title: "当前状态",
-      border: $data.eDays <= 15
+      title: "当前状态"
     }),
-    e: ($data.eDays || $data.eDays === 0) && $data.eDays <= 15
-  }, ($data.eDays || $data.eDays === 0) && $data.eDays <= 15 ? common_vendor.e({
-    f: common_vendor.o(($event) => $data.needRefund = $event.detail),
-    g: common_vendor.p({
+    e: common_vendor.o(($event) => $data.needRefund = $event.detail),
+    f: common_vendor.p({
       size: "20px",
       checked: $data.needRefund
     }),
-    h: common_vendor.p({
+    g: common_vendor.p({
+      center: true,
       title: "是否需要退费",
       border: $data.needRefund
     }),
-    i: $data.needRefund
+    h: $data.needRefund
   }, $data.needRefund ? common_vendor.e({
-    j: common_vendor.o(($event) => $data.item.refund = $event.detail),
-    k: common_vendor.p({
+    i: common_vendor.o(($event) => $data.item.refund = $event.detail),
+    j: common_vendor.p({
+      focus: true,
       value: $data.item.refund,
       rightIcon: "bill-o",
       label: "退费金额",
@@ -93,61 +92,58 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       inputAlign: "right",
       placeholder: "输入退费金额"
     }),
-    l: common_vendor.o(($event) => $data.isRefund = $event.detail),
-    m: common_vendor.p({
+    k: common_vendor.o(($event) => $data.isRefund = $event.detail),
+    l: common_vendor.p({
       size: "20px",
       checked: $data.isRefund
     }),
-    n: common_vendor.p({
+    m: common_vendor.p({
       title: "是否已退费",
       border: !$data.isRefund
     }),
-    o: !$data.isRefund
+    n: !$data.isRefund
   }, !$data.isRefund ? common_vendor.e({
-    p: $data.eDays < 0
+    o: $data.eDays < 0
   }, $data.eDays < 0 ? {
-    q: common_vendor.t($data.eDays * -1)
+    p: common_vendor.t($data.eDays * -1)
   } : {
-    r: common_vendor.t($data.eDays)
+    q: common_vendor.t($data.eDays)
   }, {
-    s: common_vendor.p({
+    r: common_vendor.p({
       title: "退费剩余天数",
       border: false
     })
-  }) : {}) : {}) : {}, {
-    t: common_vendor.p({
+  }) : {}) : {}, {
+    s: common_vendor.p({
       inset: true,
       border: false
     }),
-    v: common_vendor.p({
+    t: common_vendor.p({
       title: "承办人",
       value: $data.item.processer
     }),
-    w: common_vendor.p({
+    v: common_vendor.p({
       title: "承办部门",
       value: $data.item.department
     }),
-    x: common_vendor.p({
+    w: common_vendor.p({
       border: false,
       title: "书记员",
       value: $data.item.clerker
     }),
-    y: common_vendor.p({
+    x: common_vendor.p({
       inset: true,
       border: false
     }),
-    z: ($data.eDays || $data.eDays === 0) && $data.eDays <= 15
-  }, ($data.eDays || $data.eDays === 0) && $data.eDays <= 15 ? {
-    A: common_vendor.p({
+    y: common_vendor.p({
       formType: "submit",
-      disabled: $data.item.refund <= 0,
+      disabled: (!$data.item.refund || $data.item.refund <= 0) && $data.needRefund,
       loading: $data.loading,
       block: true,
       type: "info",
       loadingType: "circular"
-    })
-  } : {}, {
-    B: common_vendor.o((...args) => $options.save && $options.save(...args))
+    }),
+    z: common_vendor.o((...args) => $options.save && $options.save(...args))
   });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "/Users/zhangleo/workspace/court/pages/case/case.vue"]]);

@@ -50,8 +50,8 @@ if (!Array) {
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   var _a, _b;
   return common_vendor.e({
-    a: _ctx.item.step == 2
-  }, _ctx.item.step == 2 ? {
+    a: _ctx.item.refund === null
+  }, _ctx.item.refund === null ? {
     b: common_vendor.p({
       type: "danger",
       size: "small"

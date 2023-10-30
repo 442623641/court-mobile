@@ -1,8 +1,8 @@
 <template>
 	<view class="card case-card" @click="goDetail(item)" :class="{loading:!dataItem}">
 		<view class="title margin-bottom-12">
-			<van-tag class="new-tag" type="danger" size='small' v-if="item.step==2">New</van-tag>
-			<text class="skeleton-item">{{item.no}}</text>
+			<van-tag class="new-tag" type="danger" size='small' v-if="item.refund===null">New</van-tag>
+			<text class="skeleton-item strong">{{item.no}}</text>
 			<view :class='`case-state skeleton-item state-${item.step}`' />
 		</view>
 		<van-steps active-color='#38f' v-if='item.steps?.length' :steps="item.steps" :active="item.state"
@@ -66,7 +66,7 @@
 
 	.case-card {
 		.title {
-			font-size: 15px;
+			font-size: 16px;
 			position: relative;
 
 			.new-tag {
@@ -86,7 +86,7 @@
 		}
 
 		.footer {
-			font-size: 13px;
+			font-size: 14px;
 			color: #666;
 		}
 

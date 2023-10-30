@@ -82,7 +82,7 @@
 				wx.setStorageSync(storageKey, this.historyKeys);
 			},
 			patch(pageIndex : number) {
-				return api.cases({ keyWord: this.keyWord }, pageIndex).then(({ data, recordCount }) => {
+				return api.cases({ searchkey: this.keyWord }, pageIndex).then(({ data, recordCount }) => {
 					this.recordCount = recordCount;
 					this.items = pageIndex == 1 ? data : [...this.items, ...data]
 					this.pageIndex += 1;

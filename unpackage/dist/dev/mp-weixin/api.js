@@ -31,7 +31,7 @@ const api = {
   cases(data, pageIndex = 1) {
     return utils_request.request.get("court/pages", {
       pageIndex,
-      pageSize: 10,
+      pageSize: 20,
       ...data
     });
   },
@@ -50,11 +50,14 @@ const api = {
   setRefund(data) {
     return utils_request.request.post("Court/MyRefund", data);
   },
-  statistics() {
-    return utils_request.request.get("Court/Statistics");
+  statistics(data) {
+    return utils_request.request.get("Court/Statistics", data);
   },
-  refundRate() {
-    return utils_request.request.get("Court/RefundRate");
+  refundRate(data) {
+    return utils_request.request.get("Court/RefundRate", data);
+  },
+  statisticsStep(type) {
+    return utils_request.request.get("Court/StatisticsStep", { type });
   }
 };
 exports.api = api;

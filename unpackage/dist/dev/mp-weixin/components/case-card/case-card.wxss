@@ -73,7 +73,7 @@
   vertical-align: 1px;
 }
 .case-card .title {
-  font-size: 15px;
+  font-size: 16px;
   position: relative;
 }
 .case-card .title .new-tag {
@@ -90,7 +90,7 @@
   margin-inline: 8px;
 }
 .case-card .footer {
-  font-size: 13px;
+  font-size: 14px;
   color: #666;
 }
 .case-card .case-state {

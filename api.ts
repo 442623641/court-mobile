@@ -31,7 +31,7 @@ export default {
 	cases(data, pageIndex = 1) {
 		return request.get('court/pages', {
 			pageIndex,
-			pageSize: 10,
+			pageSize: 20,
 			...data
 		})
 	},
@@ -50,11 +50,13 @@ export default {
 	setRefund(data : { refund ?: number, isRefund ?: ERefunds }) {
 		return request.post('Court/MyRefund', data)
 	},
-	statistics() {
-		return request.get('Court/Statistics')
+	statistics(data) {
+		return request.get('Court/Statistics', data)
 	},
-	refundRate() {
-		return request.get('Court/RefundRate')
+	refundRate(data) {
+		return request.get('Court/RefundRate', data)
+	},
+	statisticsStep(type : 1 | 0) {
+		return request.get('Court/StatisticsStep', { type })
 	}
-
 }

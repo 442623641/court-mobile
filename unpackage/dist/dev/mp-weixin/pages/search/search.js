@@ -54,7 +54,7 @@ const _sfc_main = {
       common_vendor.wx$1.setStorageSync(storageKey, this.historyKeys);
     },
     patch(pageIndex) {
-      return api.api.cases({ keyWord: this.keyWord }, pageIndex).then(({ data, recordCount }) => {
+      return api.api.cases({ searchkey: this.keyWord }, pageIndex).then(({ data, recordCount }) => {
         this.recordCount = recordCount;
         this.items = pageIndex == 1 ? data : [...this.items, ...data];
         this.pageIndex += 1;

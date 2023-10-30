@@ -8,7 +8,7 @@ require("../../utils/tools.js");
 const _sfc_main = {
   data() {
     return {
-      notices: {},
+      notices: null,
       loading: false,
       pageIndex: 1,
       recordCount: 0,
@@ -31,13 +31,7 @@ const _sfc_main = {
     };
   },
   onLoad(opt) {
-    console.log(opt);
-    if (opt.items) {
-      this.items = JSON.parse(opt.items);
-      this.items[0].tt = true;
-    } else {
-      this.refresh();
-    }
+    this.refresh();
   },
   onPullDownRefresh() {
     this.refresh().finally(() => {
@@ -52,6 +46,15 @@ const _sfc_main = {
   },
   methods: {
     refresh() {
+      api.api.statisticsStep(this.userInfo.roleCode == 8 ? 0 : 1).then((res) => {
+        var _a, _b, _c;
+        res = res || [];
+        this.notices = {
+          pendding: (_a = res.find((x) => x.name = constant.STATES.待编辑)) == null ? void 0 : _a.value,
+          willRefund: (_b = res.find((x) => x.name = constant.STATES.待退)) == null ? void 0 : _b.value,
+          overdue: (_c = res.find((x) => x.name = constant.STATES.超期)) == null ? void 0 : _c.value
+        };
+      }).catch(() => 0);
       this.recordCount = 0;
       return this.patch(this.pageIndex = 1).catch(() => this.items = []);
     },
@@ -68,11 +71,11 @@ const _sfc_main = {
         return;
       this.query = { ...e };
       this.refresh();
-    },
-    goPendding() {
-      console.log("goPendding");
-      common_vendor.wx$1.navigateTo({ url: `/pages/index/index?items=${JSON.stringify(this.items.slice(0, 10))}` });
     }
+    // goPendding() {
+    // 	console.log('goPendding')
+    // 	wx.navigateTo({ url: `/pages/index/index?items=${JSON.stringify(this.items.slice(0, 10))}` })
+    // }
   }
 };
 if (!Array) {
@@ -90,7 +93,7 @@ if (!Math) {
   (_easycom_lo_header + _easycom_case_card)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t;
   return common_vendor.e({
     a: !((_b = (_a = $data.items) == null ? void 0 : _a[0]) == null ? void 0 : _b.tt)
   }, !((_d = (_c = $data.items) == null ? void 0 : _c[0]) == null ? void 0 : _d.tt) ? {
@@ -112,19 +115,30 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     e: (_e = $data.items) == null ? void 0 : _e.length
   }, ((_f = $data.items) == null ? void 0 : _f.length) ? common_vendor.e({
-    f: $data.notices
-  }, $data.notices ? {
-    g: common_vendor.t(5),
-    h: common_vendor.t(3),
-    i: common_vendor.o($options.goPendding),
-    j: common_vendor.p({
-      mode: "link",
+    f: ((_g = $data.notices) == null ? void 0 : _g.pendding) || ((_h = $data.notices) == null ? void 0 : _h.willRefund) || ((_i = $data.notices) == null ? void 0 : _i.overdue)
+  }, ((_j = $data.notices) == null ? void 0 : _j.pendding) || ((_k = $data.notices) == null ? void 0 : _k.willRefund) || ((_l = $data.notices) == null ? void 0 : _l.overdue) ? common_vendor.e({
+    g: $data.notices.pendding
+  }, $data.notices.pendding ? {
+    h: common_vendor.t($data.notices.pendding)
+  } : {}, {
+    i: $data.notices.willRefund + $data.notices.overdue
+  }, $data.notices.willRefund + $data.notices.overdue ? common_vendor.e({
+    j: $data.notices.pendding
+  }, $data.notices.pendding ? {} : {}, {
+    k: common_vendor.t($data.notices.willRefund + $data.notices.overdue),
+    l: $data.notices.overdue
+  }, $data.notices.overdue ? {
+    m: common_vendor.t($data.notices.overdue)
+  } : {}) : {}, {
+    n: common_vendor.p({
+      scrollable: false,
+      mode: "closeable",
       color: "#1989fa",
       background: "#ecf9ff",
       leftIcon: "volume-o"
     })
-  } : {}, {
-    k: common_vendor.f($data.items, (item, k0, i0) => {
+  }) : {}, {
+    o: common_vendor.f($data.items, (item, k0, i0) => {
       return {
         a: item == null ? void 0 : item.id,
         b: "1cf27b2a-3-" + i0,
@@ -133,19 +147,19 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       };
     }),
-    l: common_vendor.s(`padding-top:${$data.navbar.height}`)
+    p: common_vendor.s(`padding-top:${$data.navbar.height}`)
   }) : {}, {
-    m: ((_g = $data.items) == null ? void 0 : _g.length) > 2 && ((_h = $data.items) == null ? void 0 : _h.length) == $data.recordCount
-  }, ((_i = $data.items) == null ? void 0 : _i.length) > 2 && ((_j = $data.items) == null ? void 0 : _j.length) == $data.recordCount ? {} : {}, {
-    n: ((_k = $data.items) == null ? void 0 : _k.length) < $data.recordCount
-  }, ((_l = $data.items) == null ? void 0 : _l.length) < $data.recordCount ? {
-    o: common_vendor.p({
+    q: ((_m = $data.items) == null ? void 0 : _m.length) > 2 && ((_n = $data.items) == null ? void 0 : _n.length) == $data.recordCount
+  }, ((_o = $data.items) == null ? void 0 : _o.length) > 2 && ((_p = $data.items) == null ? void 0 : _p.length) == $data.recordCount ? {} : {}, {
+    r: ((_q = $data.items) == null ? void 0 : _q.length) < $data.recordCount
+  }, ((_r = $data.items) == null ? void 0 : _r.length) < $data.recordCount ? {
+    s: common_vendor.p({
       type: "spinner"
     })
   } : {}, {
-    p: !((_m = $data.items) == null ? void 0 : _m.length)
-  }, !((_n = $data.items) == null ? void 0 : _n.length) ? {
-    q: common_vendor.p({
+    t: !((_s = $data.items) == null ? void 0 : _s.length)
+  }, !((_t = $data.items) == null ? void 0 : _t.length) ? {
+    v: common_vendor.p({
       description: "暂无数据"
     })
   } : {});

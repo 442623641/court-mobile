@@ -83,6 +83,10 @@
 		display: block;
 	}
 
+	.strong {
+		font-weight: bold;
+	}
+
 	.card {
 		background: #ffffff;
 		padding: 16px;
@@ -91,7 +95,7 @@
 		margin-bottom: 12px;
 		border-radius: 8px;
 		transition: transform 500ms cubic-bezier(0.12, 0.72, 0.29, 1) 0s;
-		font-size: 0.875rem;
+		// font-size: 0.875rem;
 		/* box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 16px; */
 	}
 

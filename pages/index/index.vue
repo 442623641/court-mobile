@@ -5,9 +5,12 @@
 			title="请输入搜索关键词" url='/pages/search/search' />
 	</lo-header>
 	<view :style="`padding-top:${navbar.height}`" class="list" v-if='items?.length'>
-		<van-notice-bar @click='goPendding' mode='link' color="#1989fa" background="#ecf9ff" v-if='notices'
-			left-icon="volume-o">
-			你有{{5}}件案子等待退费，{{3}}件待处理
+		<van-notice-bar :scrollable='false' mode="closeable" color="#1989fa" background="#ecf9ff"
+			v-if='notices?.pendding||notices?.willRefund||notices?.overdue' left-icon="volume-o">
+			有<text v-if='notices.pendding'><text class='danger'>{{notices.pendding}}</text>件案子待处理</text><text
+				v-if='notices.willRefund+notices.overdue'><template v-if="notices.pendding">，</template><text
+					class='danger'>{{notices.willRefund+notices.overdue}}</text>件待退费<template
+					v-if='notices.overdue'>(<text class='danger'>{{notices.overdue}}件已超期</text>)</template></text>
 		</van-notice-bar>
 		<case-card :dataItem='item' v-for='item of items' :key="item?.id" />
 	</view>
@@ -27,7 +30,7 @@
 	export default {
 		data() {
 			return {
-				notices: <any>{},
+				notices: null,
 				loading: false,
 				pageIndex: 1,
 				recordCount: 0,
@@ -51,13 +54,13 @@
 			}
 		},
 		onLoad(opt : any) {
-			console.log(opt);
-			if (opt.items) {
-				this.items = JSON.parse(opt.items)
-				this.items[0].tt = true;
-			} else {
-				this.refresh();
-			}
+			this.refresh();
+			// if (opt.items) {
+			// 	this.items = JSON.parse(opt.items)
+			// 	this.items[0].tt = true;
+			// } else {
+			// 	this.refresh();
+			// }
 		},
 		onPullDownRefresh() {
 			this.refresh().finally(() => {
@@ -72,6 +75,14 @@
 		},
 		methods: {
 			refresh() {
+				api.statisticsStep(this.userInfo.roleCode == 8 ? 0 : 1).then((res : { value : number, name : number }[]) => {
+					res = res || [];
+					this.notices = {
+						pendding: res.find(x => x.name = STATES.待编辑)?.value,
+						willRefund: res.find(x => x.name = STATES.待退)?.value,
+						overdue: res.find(x => x.name = STATES.超期)?.value
+					}
+				}).catch(() => 0)
 				this.recordCount = 0;
 				return this.patch(this.pageIndex = 1).catch(() => this.items = [])
 			},
@@ -88,10 +99,10 @@
 				this.query = { ...e };
 				this.refresh()
 			},
-			goPendding() {
-				console.log('goPendding')
-				wx.navigateTo({ url: `/pages/index/index?items=${JSON.stringify(this.items.slice(0, 10))}` })
-			}
+			// goPendding() {
+			// 	console.log('goPendding')
+			// 	wx.navigateTo({ url: `/pages/index/index?items=${JSON.stringify(this.items.slice(0, 10))}` })
+			// }
 		}
 	}
 </script>
@@ -119,5 +130,10 @@
 		display: flex;
 		flex: 1;
 		margin-left: 10px;
+	}
+
+	.danger {
+		color: red;
+		margin-inline: 3px;
 	}
 </style>

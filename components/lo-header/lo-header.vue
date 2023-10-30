@@ -1,12 +1,12 @@
 <template>
 	<van-nav-bar fixed :border='false' z-index=11>
-		<template slot='left'><van-icon name="filter-o" size='18' @click='show = true' /></template>
+		<template slot='left'><van-icon name="filter-o" size='20' @click='show = true' /></template>
 		<template slot='title'>
 			<slot name='title'></slot>
 		</template>
 	</van-nav-bar>
-	<van-popup root-portal custom-style="padding-top:60px" position='top' :show="show">
-		<options :query='query' :filters='filters' @close='onClose' />
+	<van-popup :custom-style="`padding-top:${height}`" position='top' :show="show" @close='show=false'>
+		<options :query='query' :filters='filters' @close='onClose' close-on-click-overlay />
 	</van-popup>
 </template>
 <script lang="ts" setup>
@@ -17,6 +17,7 @@
 		query: Object,
 		filters: Array
 	})
+	const { height } = getApp().globalData.navbar;
 	const emits = defineEmits(['filter-save']);
 	const show = ref()
 	const onClose = (e) => {

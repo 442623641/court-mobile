@@ -6,8 +6,8 @@ const utils_common = require("./utils/common.js");
 require("./utils/request.js");
 require("./utils/tools.js");
 if (!Math) {
-  "./pages/login/login.js";
   "./pages/index/index.js";
+  "./pages/login/login.js";
   "./pages/chart/chart.js";
   "./pages/my/my.js";
   "./pages/password/password.js";

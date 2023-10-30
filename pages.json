@@ -1,17 +1,6 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/login/login",
-			"style": {
-				"backgroundColor": "#FFFFFF",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom",
-				"usingComponents": {
-					"van-field": "/wxcomponents/vant/field/index"
-				}
-			}
-		},
-		{
 			"path": "pages/index/index",
 			"style": {
 				"enablePullDownRefresh": true,
@@ -29,6 +18,16 @@
 					// "van-dropdown-item": "/wxcomponents/vant/dropdown-item/index",
 
 
+				}
+			}
+		}, {
+			"path": "pages/login/login",
+			"style": {
+				"backgroundColor": "#FFFFFF",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"usingComponents": {
+					"van-field": "/wxcomponents/vant/field/index"
 				}
 			}
 		}, {

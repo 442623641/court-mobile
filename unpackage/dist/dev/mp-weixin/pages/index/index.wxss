@@ -44,3 +44,7 @@
   flex: 1;
   margin-left: 10px;
 }
+.danger.data-v-1cf27b2a {
+  color: red;
+  margin-inline: 3px;
+}

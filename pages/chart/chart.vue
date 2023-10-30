@@ -1,35 +1,34 @@
 <template>
 	<lo-header :query='query' @filter-save='save'><template slot='title'>看板</template></lo-header>
-	<scroll-view v-if='chartData' scroll-y :style="`padding-top:${navbar.height}`" :class="{loading:!chartData.length}">
-		<template v-if='chartData?.length'>
-			<qiun-wx-ucharts :canvas-id="`canvas${index}`" :inScrollView='true' :canvas2d="true"
-				v-for="(item,index) of chartData" :key="index" class="card block" :type="item.type"
-				:opts="opts[item.type]" :chartData="item" loadingType='3' />
-		</template>
-		<template v-else>
-			<view class="card" v-for="i of [1,2]" :key="i">
-				<view class="skeleton-item" />
-				<view class="skeleton-item" style="padding: 8px 80px;margin-top: 22px;" />
-			</view>
-		</template>
+	<scroll-view v-if='chartData?.length||chartBar' scroll-y :style="`padding-top:${navbar.height}`">
+		<!-- <template v-if='chartData?.length'> -->
+		<qiun-wx-ucharts :reload='reload' :optsWatch='false' :canvas-id="`canvas${index}`" :inScrollView='true'
+			:canvas2d="true" v-for="(item,index) of chartData" :key="index" class="card block" type="pie"
+			:opts="opts.pie" :chartData="item" loadingType='3' />
+		<qiun-wx-ucharts :reload='reload' :optsWatch='false' canvas-id="zdscanvas56" :inScrollView='true'
+			:canvas2d="true" class="card block" type="bar" :opts="opts.bar" :chartData="chartBar" loadingType='3' />
+
+		<!-- </template> -->
 	</scroll-view>
-	<van-empty class="margin-top" v-if='!chartData' description="暂无数据" />
+	<van-empty class="margin-top" v-if='!chartData?.length&&chartBar===null' description="暂无数据" />
 </template>
 <script lang="ts" setup>
 	import { onLoad } from '@dcloudio/uni-app'
 	import { ref } from 'vue';
 	import api from '../../api';
 	const navbar = getApp().globalData.navbar;
-	const chartData = ref<any[]>([]);
+	const chartData = ref<any[]>([{}, {}]);
+	const chartBar = ref({});
 	const query = ref({})
-
+	const reload = ref(false);
 	const getOpts = (op = {}) => ({
 		fontSize: 12,
 		fontColor: '#999', pixelRatio: 2,
 		yAxis: { data: [{ type: 'categories' }] },
 		xAxis: { formatter: (value, index) => value == 100 ? '100%' : value, min: 0, max: 100, axisLineColor: 'rgba(0,0,0,.1)', calibration: false, gridColor: 'rgba(0,0,0,.1)', gridType: 'dash' },
 		color: ["#1890FF", "#03D6EF", "#7114FF", "#F83818", "#FC8452", "#FFC513"],
-		padding: [16, 10, 10, 10],
+		padding: [16, 50, 10, 10],
+		background: true,
 		// enableScroll: false,
 		extra: {
 			bar: {
@@ -60,32 +59,40 @@
 	const opts = { pie: getOpts({ padding: [16, 10, 10, 10] }), bar: getOpts() }
 	const save = (e) => {
 		console.log(e);
-		this.query = { ...e };
+		query.value = { ...(e || {}) };
+		chartData.value = [{}, {}];
+		chartBar.value = {};
+		reload.value = true;
+		patch()
 	}
-
-	onLoad(() => {
-		api.statistics().then((res : any) =>
-			chartData.value = Object.keys(res).map((v, index) => ({
+	const patch = () => {
+		api.statistics(query.value).then((res : any) =>
+			chartData.value = Object.keys(res).map((v, index) => JSON.parse(JSON.stringify({
 				type: 'pie',
 				series: [
 					{
 						data: res[v]
 					}
 				]
-			}))).catch(() => 0)
-			.finally(() => api.refundRate().then((res : any[]) => chartData.value.push({
-				type: 'bar',
-				// id: 'RefundRate',
-				categories: res.map(v => v.name),
-				series: [
-					{
-						name: "退费率",
-						data: res.map(v => `${v.refundRate * 100}`),
-						formatter: (v) => `${v}%`
-					}
-				]
-			})).catch(() => 0).finally(() => { chartData.value = chartData.value.length ? chartData.value : null }))
+			}))))
+			.catch(() => chartData.value = [])
+			.finally(() => setTimeout(() => api.refundRate(query.value)
+				.then((res : any[]) => chartBar.value = JSON.parse(JSON.stringify({
+					// type: 'bar',
+					// id: 'RefundRate',
+					categories: res.map(v => v.name),
+					series: [
+						{
+							name: "退费率",
+							data: res.map(v => `${v.refundRate * 100}`),
+							formatter: (v) => `${v}%`
+						}
+					]
+				}))).catch(() => chartBar.value = null), 300))
+	}
 
+	onLoad(() => {
+		patch()
 	})
 </script>
 
