@@ -1,8 +1,0 @@
-{
-  "backgroundColor": "#FFFFFF",
-  "enablePullDownRefresh": false,
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "van-field": "../../wxcomponents/vant/field/index"
-  }
-}

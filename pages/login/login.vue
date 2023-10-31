@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="logo">
-			<image src='/static/logo.jpg' />
+			<image src='/static/logo.png' />
 			<view>淮南市田家庵区人民法院</view>
 		</view>
 		<form @submit="login">

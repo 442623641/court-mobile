@@ -1,8 +1,0 @@
-{
-  "navigationStyle": "custom",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "qiun-wx-ucharts": "../../wxcomponents/qiun-wx-ucharts/index",
-    "lo-header": "../../components/lo-header/lo-header"
-  }
-}
